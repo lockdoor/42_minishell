@@ -1,37 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/13 15:26:15 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/15 07:07:41 by pnamnil          ###   ########.fr       */
+/*   Created: 2023/12/13 15:24:22 by pnamnil           #+#    #+#             */
+/*   Updated: 2023/12/13 15:26:54 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(void)
+int	showtoken(char	*line)
 {
-	char	*line;
-	t_cmd	*cmd;
+	char	*ps;
+	char	*es;
+	char	*q;
+	char	*eq;
+	int		type;
 
-	while (1)
+	ps = line;
+	es = ft_strchr(ps, 0);
+	while ((type = gettoken(&ps, es, &q, &eq)))
 	{
-		line = readline("> ");
-		if (!line)
-			break;
-		// showtoken (line);
-		// parsecmd (line);
-		cmd = parser (line);
-		if (cmd)
-		{
-			debug_parser (cmd);
-			free_cmd (cmd);
-		}
-		free (line);
+		if (type == -1)
+			return (-1);
+		write (1, "type: ", 7);
+		write (1, &type, 1);
+		write (1, ", ", 2);
+		write (1, "char: ", 7);
+		write (1, q, eq - q);
+		write (1, "\n", 1);
 	}
-	free (line);
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/24 15:48:31 by pnamnil           #+#    #+#              #
-#    Updated: 2023/12/13 10:32:39 by pnamnil          ###   ########.fr        #
+#    Updated: 2023/12/15 06:29:03 by pnamnil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,11 @@ CFLAGS = -Wall -Werror -Wextra
 # CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 
 SRCS = main.c \
-		# debug.c \
+		debug.c \
+		gettoken.c \
+		parser.c \
+		free.c \
+		debug_parser_2.c \
 		# ft_free.c \
 		# ft_get_env.c \
 		# lexer/lexer.c \

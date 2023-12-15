@@ -1,37 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/13 15:26:15 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/15 07:07:41 by pnamnil          ###   ########.fr       */
+/*   Created: 2023/12/14 15:39:13 by pnamnil           #+#    #+#             */
+/*   Updated: 2023/12/15 06:51:01 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(void)
+void	free_cmd(t_cmd *cmd)
 {
-	char	*line;
-	t_cmd	*cmd;
+	t_redir	*redir;
+	t_pipe	*pipe;
 
-	while (1)
+	if (!cmd)
+		return ;
+	if (cmd->type == EXEC)
+		free (cmd);
+	if (cmd->type == REDIR)
 	{
-		line = readline("> ");
-		if (!line)
-			break;
-		// showtoken (line);
-		// parsecmd (line);
-		cmd = parser (line);
-		if (cmd)
-		{
-			debug_parser (cmd);
-			free_cmd (cmd);
-		}
-		free (line);
+		redir = (t_redir *)cmd;
+		free_cmd((t_cmd *)redir->cmd);
+		free (cmd);
 	}
-	free (line);
-	return (0);
+	if (cmd->type == PIPE)
+	{
+		pipe = (t_pipe *)cmd;
+		free_cmd(pipe->left);
+		free_cmd(pipe->right);
+		free (cmd);
+	}
 }
