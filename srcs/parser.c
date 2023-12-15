@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 08:08:40 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/15 08:49:19 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/15 09:55:16 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,58 +136,56 @@ t_cmd	*parse_exec(char **ps, char *es)
 	return (ret);
 }
 
-t_cmd	*redircmd(t_cmd *cmd, int fd, int mode)
+t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, char **q)
 {
 	t_redir	*redir;
+	t_redir *new_redir;
 
-	redir = (t_redir *) malloc (sizeof (t_redir));
-	if (!redir)
+	new_redir = (t_redir *) malloc (sizeof (t_redir));
+	if (!new_redir)
 	{
 		free_cmd (cmd);
 		perror ("redircmd");
 		return (NULL);
 	}
-	redir->cmd = cmd;
-	redir->fd = fd;
-	redir->mode = mode;
-	redir->type = REDIR;
-	return ((t_cmd *)redir);
+	new_redir->fd = fd;
+	new_redir->mode = mode;
+	new_redir->type = REDIR;
+	new_redir->file = q[0];
+	new_redir->efile = q[1];
+	if (cmd->type == REDIR)
+	{
+		redir = (t_redir *)cmd;
+		new_redir->cmd = redir->cmd;
+		redir->cmd = (t_cmd *) new_redir;
+		return ((t_cmd *)redir);
+	}
+	new_redir->cmd = cmd;
+	return ((t_cmd *)new_redir);
 }
 
 t_cmd	*parse_redir(t_cmd *cmd, char **ps, char *es)
 {
-	t_redir	*redir;
 	int		token;
-	char	*q;
-	char	*eq;
+	char	*q[2];
 
 	
 	while (peek (ps, es, "<>"))
 	{
 		token = gettoken(ps, es, NULL, NULL);
+		if (gettoken(ps, es, &q[0], &q[1]) != 'a')
+			return token_error (cmd, FILE_NAME_NOT_FOUND);
 		if (token == '<')
-			cmd = redircmd(cmd, 0, O_RDONLY);
+			cmd = redircmd(cmd, 0, O_RDONLY, q);
 		else if (token == '>')
-			cmd = redircmd(cmd, 1, O_WRONLY|O_CREAT|O_TRUNC);
+			cmd = redircmd(cmd, 1, O_WRONLY|O_CREAT|O_TRUNC, q);
 		else if (token == '+')
-			cmd = redircmd(cmd, 1, O_WRONLY|O_CREAT);
+			cmd = redircmd(cmd, 1, O_WRONLY|O_CREAT, q);
 		// else
 		// handle heredoc here
 
 		if (!cmd)
-		{
 			return (NULL);
-		}
-		redir = (t_redir *) cmd;
-		token = gettoken(ps, es, &q, &eq);
-		if (token != 'a')
-		{
-			write (2, FILE_NAME_NOT_FOUND, ft_strlen(FILE_NAME_NOT_FOUND));
-			free_cmd (cmd);
-			return (NULL);
-		}
-		redir->file = q;
-		redir->efile = eq;
 	}
 	return (cmd);
 }
