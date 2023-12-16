@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 08:08:40 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/15 09:55:16 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/15 13:30:52 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_cmd	*parser(char *ps)
 	if (*ps == 0)
 		return (NULL);
 	cmd = parse_pipe(&ps, es);
-	// cmd = parse_exec(&ps, es);
+	null_terminate (cmd);
 	return (cmd);
 }
 
@@ -176,11 +176,11 @@ t_cmd	*parse_redir(t_cmd *cmd, char **ps, char *es)
 		if (gettoken(ps, es, &q[0], &q[1]) != 'a')
 			return token_error (cmd, FILE_NAME_NOT_FOUND);
 		if (token == '<')
-			cmd = redircmd(cmd, 0, O_RDONLY, q);
+			cmd = redircmd(cmd, 0, token, q);
 		else if (token == '>')
-			cmd = redircmd(cmd, 1, O_WRONLY|O_CREAT|O_TRUNC, q);
+			cmd = redircmd(cmd, 1, token, q);
 		else if (token == '+')
-			cmd = redircmd(cmd, 1, O_WRONLY|O_CREAT, q);
+			cmd = redircmd(cmd, 1, token, q);
 		// else
 		// handle heredoc here
 

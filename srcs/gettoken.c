@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:25:48 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/15 08:27:00 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/15 16:22:55 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,6 @@ int	peek(char **ps, char *es, char *tok)
 		s++ ;
 	*ps = s;
 	return (*s && ft_strchr(tok, *s));
-	// if (ft_strchr(tok, *s))
-	// 	return (1);
-	// return (0);
 }
 
 int	gettoken(char **ps, char *es, char **q, char **eq)

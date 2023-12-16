@@ -6,7 +6,7 @@
 #    By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/24 15:48:31 by pnamnil           #+#    #+#              #
-#    Updated: 2023/12/15 06:29:03 by pnamnil          ###   ########.fr        #
+#    Updated: 2023/12/15 13:02:45 by pnamnil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,9 @@ SRCS = main.c \
 		debug.c \
 		gettoken.c \
 		parser.c \
+		null_terminate.c \
 		free.c \
+		runcmd.c \
 		debug_parser_2.c \
 		# ft_free.c \
 		# ft_get_env.c \

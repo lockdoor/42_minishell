@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 06:14:42 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/15 07:08:34 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/15 10:49:58 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,27 +23,21 @@ void	debug_parser(t_cmd *cmd)
 	{
 		i = 0;
 		exec = (t_exec *)cmd;
-		ft_putstr_fd ("Command: ", 1);
+		printf ("Command: ");
 		while (exec->argv[i])
-		{
-			write (1, exec->argv[i], exec->eargv[i] - exec->argv[i]);
-			write (1, " ", 1);
-			i++ ;
-		}
-		write (1, "\n", 1);
+			printf ("%s ", exec->argv[i++]);
+		printf ("\n");
 	}
 	if (cmd->type == REDIR)
 	{
 		redir = (t_redir *)cmd;
-		ft_putstr_fd ("Redirect: ", 1);
-		write (1, redir->file, redir->efile - redir->file);
-		printf (", FD: %d\n", redir->fd);
+		printf ("Redirect: %s, FD: %d\n", redir->file, redir->fd);
 		debug_parser (redir->cmd);
 	}
 	if (cmd->type == PIPE)
 	{
 		pipe = (t_pipe *)cmd;
-		ft_putendl_fd ("Found PIPE", 1);
+		printf ("Found PIPE\n");
 		debug_parser (pipe->left);
 		debug_parser (pipe->right);
 	}

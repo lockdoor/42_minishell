@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 10:33:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/15 08:21:50 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/15 14:28:42 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -31,6 +32,12 @@
 # define FILE_NAME_NOT_FOUND "file name not found"
 # define COMMAND_NOT_FOUND "command not found"
 
+extern char	**environ;
+typedef struct s_env
+{
+    char    *name;
+    char    *value;
+}   t_env;
 typedef struct s_cmd
 {
 	int type;
@@ -60,6 +67,10 @@ typedef struct s_pipe
 	t_cmd	*right;
 }	t_pipe;
 
+// ft_get_env.c
+t_list	*ft_get_env(void);
+void	ft_free_env(void *data);
+
 // debug.c
 int		showtoken(char	*line);
 void	parsecmd(char *s);
@@ -71,6 +82,9 @@ int	peek(char **ps, char *es, char *tok);
 
 // parser.c
 t_cmd	*parser(char *ps);
+void	null_terminate(t_cmd *cmd);
+
+int	runcmd(t_cmd *cmd, t_list *env);
 
 // free.c
 void	free_cmd(t_cmd *cmd);
