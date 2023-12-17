@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 10:33:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/17 12:02:38 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/17 14:17:50 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ typedef struct s_redir
 	t_cmd	*cmd;
 	char	*file;
 	char	*efile;
-	int		mode;
-	int		fd;
+	int		mode; // '<', '>', '+', 'h'
+	int		fd; //for heredoc
 }	t_redir;
 
 typedef struct s_pipe
@@ -92,6 +92,9 @@ void	null_terminate(t_cmd *cmd);
 
 // runcmd.c
 void	runcmd(t_cmd *cmd, t_shell *sh);
+void	run_pipe(t_cmd *cmd, t_shell *sh);
+int		fork_1(char	*s, t_shell *sh);
+void	run_redir(t_cmd *cmd, t_shell *sh);
 int		is_build_in(char *str);
 
 // exec_command.c

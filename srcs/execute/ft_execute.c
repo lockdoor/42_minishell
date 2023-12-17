@@ -6,13 +6,11 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 07:11:17 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/17 12:28:48 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/17 14:16:05 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 void	ft_execute(t_cmd *cmd, t_shell *sh)
 {

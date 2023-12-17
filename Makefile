@@ -6,7 +6,7 @@
 #    By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/24 15:48:31 by pnamnil           #+#    #+#              #
-#    Updated: 2023/12/17 10:42:30 by pnamnil          ###   ########.fr        #
+#    Updated: 2023/12/17 13:57:53 by pnamnil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,8 @@ SRCS = main.c \
 		parser/null_terminate.c \
 		free.c \
 		execute/runcmd.c \
+		execute/run_pipe.c \
+		execute/run_redir.c \
 		execute/ft_execute.c \
 		execute/ft_parse_cmd.c \
 		ft_get_env.c \

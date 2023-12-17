@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:26:15 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/17 12:27:10 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/17 14:18:35 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,7 @@ int	exec_command(t_cmd *cmd, t_shell *sh)
 {
 	int	id;
 
-	id = fork();
-	if (id == -1)
-	{
-		perror ("exec_command");
-		return (EXIT_FAILURE);
-	}
+	id = fork_1("exec_command", sh);
 	if (id == 0)
 		runcmd(cmd, sh);
 	waitpid(id, NULL, 0);
@@ -78,30 +73,21 @@ int main(void)
 		line = readline("$ ");
 		if (!line)
 			break;
-		// showtoken (line);
-		// parsecmd (line);
 		sh->cmd = parser (line);
 		if (!sh->cmd)
 		{
 			free(line);
 			continue;
 		}
-		// if (cmd)
-		// {
-		// 	debug_parser (cmd);
-		// 	free_cmd (cmd);
-		// }
 		if (is_non_fork(sh->cmd))
 			runcmd(sh->cmd, sh);
 		else
 			exec_command(sh->cmd, sh);
-		// free (cmd);	
 		free_cmd (sh->cmd);
 		free (line);
 	}
 	ft_lstclear(&sh->env, &free_env);
 	free (sh);
-	// free_shell (sh);
 	free (line);
 	return (0);
 }
