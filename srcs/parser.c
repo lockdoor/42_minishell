@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 08:08:40 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/15 13:30:52 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/16 12:27:52 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,11 @@ t_cmd	*parser(char *ps)
 	char	*es;
 
 	es = ft_strchr(ps, 0);
-	peek(&ps, es, "");
+	// peek(&ps, es, "");
+	// if (*ps == 0)
+	// 	return (NULL);
+	while (*ps && ft_strchr(WHITESPACE, *ps))
+		ps++ ;
 	if (*ps == 0)
 		return (NULL);
 	cmd = parse_pipe(&ps, es);

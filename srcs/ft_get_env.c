@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:02:45 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/15 14:26:30 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/17 08:07:14 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,6 @@
 
 static t_env	*ft_set_env(char *s);
 static t_env	*ft_set_env_2(char *s, t_env *env);
-
-void	ft_free_env(void *data)
-{
-	t_env	*env;
-
-	env = (t_env *) data;
-	free (env->name);
-	free (env->value);
-	free (env);
-}
 
 t_list	*ft_get_env(void)
 {
@@ -39,14 +29,14 @@ t_list	*ft_get_env(void)
 		env = ft_set_env(environ[i]);
 		if (!env)
 		{
-			ft_lstclear(&lst, &ft_free_env);
+			ft_lstclear(&lst, &free_env);
 			break;
 		}
 		new = ft_lstnew(env);
 		if (!new)
 		{
-			ft_free_env(env);
-			ft_lstclear(&lst, &ft_free_env);
+			free_env(env);
+			ft_lstclear(&lst, &free_env);
 			perror ("ft_get_env");
 			break ;
 		}

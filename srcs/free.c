@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 15:39:13 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/15 06:51:01 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/17 08:23:19 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,40 @@ void	free_cmd(t_cmd *cmd)
 	if (!cmd)
 		return ;
 	if (cmd->type == EXEC)
+	{
 		free (cmd);
-	if (cmd->type == REDIR)
+		cmd = NULL;
+	}
+	else if (cmd->type == REDIR)
 	{
 		redir = (t_redir *)cmd;
 		free_cmd((t_cmd *)redir->cmd);
 		free (cmd);
+		cmd = NULL;
 	}
-	if (cmd->type == PIPE)
+	else if (cmd->type == PIPE)
 	{
 		pipe = (t_pipe *)cmd;
 		free_cmd(pipe->left);
 		free_cmd(pipe->right);
 		free (cmd);
+		cmd = NULL;
 	}
+}
+
+void	free_env(void *data)
+{
+	t_env	*env;
+
+	env = (t_env *) data;
+	free (env->name);
+	free (env->value);
+	free (env);
+}
+
+void	free_shell(t_shell *sh)
+{
+	free_cmd(sh->cmd);
+	ft_lstclear(&sh->env, &free_env);
+	free (sh);
 }

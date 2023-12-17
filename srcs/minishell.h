@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 10:33:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/15 14:28:42 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/17 08:03:19 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,15 @@ typedef struct s_pipe
 	t_cmd	*right;
 }	t_pipe;
 
+typedef struct s_shell
+{
+	t_cmd	*cmd;
+	t_list	*env;
+}	t_shell;
+
 // ft_get_env.c
 t_list	*ft_get_env(void);
-void	ft_free_env(void *data);
+
 
 // debug.c
 int		showtoken(char	*line);
@@ -84,9 +90,15 @@ int	peek(char **ps, char *es, char *tok);
 t_cmd	*parser(char *ps);
 void	null_terminate(t_cmd *cmd);
 
-int	runcmd(t_cmd *cmd, t_list *env);
+// runcmd.c
+void	runcmd(t_cmd *cmd, t_shell *sh);
+
+// exec_command.c
+void	ft_execute(t_cmd *cmd, t_shell *sh);
 
 // free.c
 void	free_cmd(t_cmd *cmd);
+void	free_env(void *data);
+void	free_shell(t_shell *sh);
 
 #endif
