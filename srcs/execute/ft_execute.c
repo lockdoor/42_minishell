@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 07:11:17 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/17 10:41:24 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/17 12:28:48 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,9 @@ void	ft_execute(t_cmd *cmd, t_shell *sh)
 		perror (*exec->argv);
 		free (parse_cmd);
 		free_shell (sh);
-		// px_free_pipex (pipex);
 		if (errno == EACCES)
 			exit (126);
 		else
 			exit (127);
 	}
-	// exit (1);
 }

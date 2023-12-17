@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 10:33:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/17 10:42:07 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/17 12:02:38 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	null_terminate(t_cmd *cmd);
 
 // runcmd.c
 void	runcmd(t_cmd *cmd, t_shell *sh);
+int		is_build_in(char *str);
 
 // exec_command.c
 void	ft_execute(t_cmd *cmd, t_shell *sh);

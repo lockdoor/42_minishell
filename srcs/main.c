@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:26:15 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/17 10:18:32 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/17 12:27:10 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,25 @@ t_shell	*init_shell(void)
 	return (sh);
 }
 
+int	is_non_fork(t_cmd *cmd)
+{
+	t_redir	*redir;
+	t_exec	*exec;
+	if (cmd->type == PIPE)
+		return (0);
+	else if (cmd->type == REDIR)
+	{
+		redir = (t_redir *)cmd;
+		return (is_non_fork (redir->cmd));
+	}
+	else if (cmd->type == EXEC)
+	{
+		exec = (t_exec *)cmd;
+		return (is_build_in(exec->argv[0]));
+	}
+	return (0);
+}
+
 int main(void)
 {
 	char	*line;
@@ -72,7 +91,10 @@ int main(void)
 		// 	debug_parser (cmd);
 		// 	free_cmd (cmd);
 		// }
-		exec_command(sh->cmd, sh);
+		if (is_non_fork(sh->cmd))
+			runcmd(sh->cmd, sh);
+		else
+			exec_command(sh->cmd, sh);
 		// free (cmd);	
 		free_cmd (sh->cmd);
 		free (line);

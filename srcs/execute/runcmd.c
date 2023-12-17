@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:49 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/17 09:47:20 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/17 12:24:14 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	run_exec(t_cmd *cmd, t_shell *sh)
 		printf("%s: Build_in is inconstruction\n", exec->argv[0]);
 	else
 		ft_execute (cmd, sh);
-	exit (0);
+	// exit (0);
 }
 
 void	run_redir(t_cmd *cmd, t_shell *sh)
@@ -146,5 +146,5 @@ void	runcmd(t_cmd *cmd, t_shell *sh)
 		run_redir(cmd, sh);
 	else if (cmd->type == PIPE)
 		run_pipe(cmd, sh);	
-	exit (0);
+	// exit (0);
 }
