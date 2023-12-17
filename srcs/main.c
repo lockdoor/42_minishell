@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:26:15 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/17 14:18:35 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/17 15:38:32 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_shell	*init_shell(void)
 		perror ("init_shell");
 		exit (EXIT_FAILURE);
 	}
+	ft_memset(sh, 0, sizeof(t_shell));
 	sh->env = ft_get_env();
 	if (!sh->env)
 	{

@@ -1,0 +1,15 @@
+run_redir.c
+    - when file not found should not exit
+    - segmentation fault when non fork
+    - parse variable before use filename
+
+run_cmd.c
+    - parse variable before use argv
+
+build in
+
+handle exit code
+
+handle signel
+
+handle shell level

@@ -6,7 +6,7 @@
 #    By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/24 15:48:31 by pnamnil           #+#    #+#              #
-#    Updated: 2023/12/17 13:57:53 by pnamnil          ###   ########.fr        #
+#    Updated: 2023/12/17 16:02:46 by pnamnil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,8 @@ SRCS = main.c \
 		execute/run_redir.c \
 		execute/ft_execute.c \
 		execute/ft_parse_cmd.c \
+		execute/ft_parser.c \
+		execute/ft_parse_var.c \
 		ft_get_env.c \
 		# ft_free.c \
 		# ft_get_env.c \

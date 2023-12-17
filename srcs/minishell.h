@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 10:33:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/17 14:17:50 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/17 16:08:51 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,9 @@ typedef struct s_pipe
 
 typedef struct s_shell
 {
-	t_cmd	*cmd;
-	t_list	*env;
+	t_cmd		*cmd;
+	t_list		*env;
+	u_int8_t	exit_code;
 }	t_shell;
 
 // ft_get_env.c
@@ -96,6 +97,13 @@ void	run_pipe(t_cmd *cmd, t_shell *sh);
 int		fork_1(char	*s, t_shell *sh);
 void	run_redir(t_cmd *cmd, t_shell *sh);
 int		is_build_in(char *str);
+char	*parse_qoute(char **str, t_shell *sh);
+char	*parse_var(char **str, t_shell *sh);
+char	*parse_db_qoute(char **str, t_shell *sh);
+char	*get_word(char **str, t_shell *sh);
+char	*parse_token(char *s, t_shell *sh);
+char	*join_free(char *s1, char *s2);
+char	*get_env(char *name, t_shell *sh);
 
 // exec_command.c
 void	ft_execute(t_cmd *cmd, t_shell *sh);

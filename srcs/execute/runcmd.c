@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:49 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/17 14:14:45 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/17 16:20:16 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ void	run_exec(t_cmd *cmd, t_shell *sh)
 	t_exec	*exec;
 
 	exec = (t_exec *)cmd;
+	if (exec->argv[0] == NULL)
+		return ;
+	/* parse variable before use argv */
 	if (is_build_in(exec->argv[0]))
 		printf("%s: Build_in is inconstruction\n", exec->argv[0]);
 	else
