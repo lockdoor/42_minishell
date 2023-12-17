@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:26:15 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/17 08:45:50 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/17 10:18:32 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ t_shell	*init_shell(void)
 	sh->env = ft_get_env();
 	if (!sh->env)
 	{
+		free (sh);
 		perror ("init_shell");
 		exit (EXIT_FAILURE);
 	}

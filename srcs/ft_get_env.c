@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:02:45 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/17 08:07:14 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/17 10:24:06 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static t_env	*ft_set_env_2(char *s, t_env *env)
 	int	i;
 
 	i = 0;
-	while (s[i] != '=')
+	while (s[i] && s[i] != '=')
 		i++ ;
 	env->name = ft_substr(s, 0, i);
 	if (!env->name)
@@ -72,14 +72,19 @@ static t_env	*ft_set_env_2(char *s, t_env *env)
 		perror ("ft_set_env_2");
 		return (NULL);
 	}
-	s = &s[++i];
-	env->value = ft_strdup(s);
-	if (!env->value)
+	if (s[i] == 0)
+		env->value = NULL;
+	else
 	{
-		free (env->name);
-		free (env);
-		perror ("ft_set_env_2");
-		return (NULL);
+		s = &s[++i];
+		env->value = ft_strdup(s);
+		if (!env->value)
+		{
+			free (env->name);
+			free (env);
+			perror ("ft_set_env_2");
+			return (NULL);
+		}
 	}
 	return (env);
 }

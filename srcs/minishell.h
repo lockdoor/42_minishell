@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 10:33:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/17 08:03:19 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/17 10:42:07 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,12 @@ void	runcmd(t_cmd *cmd, t_shell *sh);
 
 // exec_command.c
 void	ft_execute(t_cmd *cmd, t_shell *sh);
+char	*ft_parse_cmd(char	*cmd, t_list *env);
 
 // free.c
 void	free_cmd(t_cmd *cmd);
 void	free_env(void *data);
 void	free_shell(t_shell *sh);
+void	free_split(char **sp);
 
 #endif

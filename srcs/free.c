@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 15:39:13 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/17 08:23:19 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/17 10:39:25 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,14 @@ void	free_shell(t_shell *sh)
 	free_cmd(sh->cmd);
 	ft_lstclear(&sh->env, &free_env);
 	free (sh);
+}
+
+void	free_split(char **sp)
+{
+	int	i;
+
+	i = -1;
+	while (sp[++i])
+		free(sp[i]);
+	free(sp);
 }
