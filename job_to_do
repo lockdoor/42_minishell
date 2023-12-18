@@ -1,6 +1,9 @@
+main.c
+    - handle build in [exit, cd, export, unset]
+    with no pipe, it should run on parent,
+    should make new algorithm to fix it
+
 run_redir.c
-    - when file not found should not exit
-    - segmentation fault when non fork
     - parse variable before use filename
 
 run_cmd.c

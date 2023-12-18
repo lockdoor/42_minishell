@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 13:55:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/17 16:13:21 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/18 15:41:56 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	redirect_input(char *file, t_shell *sh)
 	int	fd;
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-	exit_command(file, sh);
+		exit_command(file, sh);
 	dup2 (fd, STDIN_FILENO);
 	close (fd);
 }

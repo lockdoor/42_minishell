@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:26:15 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/17 15:38:32 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/18 14:35:46 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ int main(void)
 			free(line);
 			continue;
 		}
-		if (is_non_fork(sh->cmd))
-			runcmd(sh->cmd, sh);
-		else
+		// if (is_non_fork(sh->cmd))
+		// 	runcmd(sh->cmd, sh);
+		// else
 			exec_command(sh->cmd, sh);
 		free_cmd (sh->cmd);
 		free (line);
