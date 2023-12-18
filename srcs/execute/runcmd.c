@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:49 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/17 16:20:16 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/18 14:23:18 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	is_build_in(char *str)
 {
 	size_t	len;
 
+	if (!str)
+		return (0);
 	len = ft_strlen(str);
 	return (!ft_strncmp(str, "echo", len)
 		|| !ft_strncmp(str, "cd", len)
