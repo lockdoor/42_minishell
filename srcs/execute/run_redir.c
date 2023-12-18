@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 13:55:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/18 15:41:56 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/18 17:02:37 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ void	run_redir(t_cmd *cmd, t_shell *sh)
 
 	redir = (t_redir *)cmd;
 	/* parse variable before use filename */
-	// file = parse_token(redir->file, sh);
-	file = redir->file;
+	file = parse_token(redir->file, sh);
+	// file = redir->file;
 	if (redir->mode == '<')
 		redirect_input(file, sh);
 	else if (redir->mode == '>')
 		redirect_output(file, sh);
 	else if (redir->mode == '+')
 		redirect_output_appand(file, sh);
-	// free (file);
+	free (file);
 	runcmd(redir->cmd, sh);
 }

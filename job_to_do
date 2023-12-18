@@ -9,6 +9,9 @@ run_redir.c
 run_cmd.c
     - parse variable before use argv
 
+parser.c
+    - handle heredoc on parse_redir()
+
 build in
 
 handle exit code
