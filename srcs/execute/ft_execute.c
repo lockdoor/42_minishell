@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 07:11:17 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/18 16:56:48 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/19 09:22:25 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_execute(char **argvs, t_shell *sh)
 	{
 		free_split(argvs);
 		free_shell(sh);
-		exit (1);
+		exit (127);
 	}
 	if (execve(parse_cmd, argvs, NULL))
 	{

@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:26:15 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/18 14:35:46 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/19 08:38:00 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 int	exec_command(t_cmd *cmd, t_shell *sh)
 {
 	int	id;
+	int	status;
 
 	id = fork_1("exec_command", sh);
 	if (id == 0)
 		runcmd(cmd, sh);
-	waitpid(id, NULL, 0);
+	waitpid(id, &status, 0);
+	sh->exit_code = WEXITSTATUS(status);
 	return (0);
 }
 

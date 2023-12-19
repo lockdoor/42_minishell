@@ -4,17 +4,21 @@ main.c
     should make new algorithm to fix it
 
 run_redir.c
-    - parse variable before use filename
+    - parse variable before use filename [done]
 
 run_cmd.c
-    - parse variable before use argv
+    - parse variable before use argv [done]
 
 parser.c
     - handle heredoc on parse_redir()
 
-build in
+ft_execute.c
+    - handle . command with /bin/bash
 
-handle exit code
+build in
+    - echo [done]
+
+handle exit code [done]
 
 handle signel
 

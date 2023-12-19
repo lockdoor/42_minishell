@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 13:44:47 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/17 13:52:57 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/19 09:25:38 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	run_pipe(t_cmd *cmd, t_shell *sh)
 	int		p[2];
 	int		id[2];
 	t_pipe	*exec_pipe;
+	int		status;
 
 	exec_pipe = (t_pipe *)cmd;
 	if (pipe(p))
@@ -64,6 +65,9 @@ void	run_pipe(t_cmd *cmd, t_shell *sh)
 	close (p[0]);
 	close (p[1]);
 	waitpid(id[0], NULL, 0);
-	waitpid(id[1], NULL, 0);
-	exit (0);
+	waitpid(id[1], &status, 0);
+	// debug
+	// printf ("runpipe: status: %d\n", WEXITSTATUS(status));
+	// exit (status);
+	exit (WEXITSTATUS(status));
 }

@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 10:33:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/19 07:16:27 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/19 08:29:18 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@
 # define COMMAND_NOT_FOUND "command not found"
 
 extern char	**environ;
+
 typedef struct s_env
 {
     char    *name;
     char    *value;
 }   t_env;
+
 typedef struct s_cmd
 {
 	int type;
