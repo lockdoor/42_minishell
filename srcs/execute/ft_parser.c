@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:26:55 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/17 16:00:13 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/19 07:56:57 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	argv_len(char **argv)
 {
 	int	i;
 
-	i = -1;
+	i = 0;
 	while (argv[i])
 		i++ ;
 	return (i);
@@ -25,7 +25,7 @@ int	argv_len(char **argv)
 char	**error_parse_argv(char **argv, int i)
 {
 	while (i)
-		free (argv[i--]);
+		free (argv[--i]);
 	free (argv);
 	return (NULL);
 }
@@ -36,6 +36,8 @@ char	**ft_parser(char **argv, t_shell *sh)
 	char	**parse_argv;
 
 	parse_argv = (char **)malloc(sizeof(char *) * (argv_len(argv) + 1));
+	if (!parse_argv)
+		return (NULL);
 	i = -1;
 	while (argv[++i])
 	{
@@ -47,6 +49,7 @@ char	**ft_parser(char **argv, t_shell *sh)
 		if (!parse_argv[i])
 			return (error_parse_argv(parse_argv, i));
 	}
+	parse_argv[i] = NULL;
 	return (parse_argv);
 }
 

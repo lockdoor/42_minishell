@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 10:33:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/18 16:57:16 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/19 07:16:27 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,9 @@ char	*get_env(char *name, t_shell *sh);
 // exec_command.c
 void	ft_execute(char **argvs, t_shell *sh);
 char	*ft_parse_cmd(char	*cmd, t_list *env);
+
+// build_in
+int	echo(char **argv);
 
 // free.c
 void	free_cmd(t_cmd *cmd);

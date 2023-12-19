@@ -6,7 +6,7 @@
 #    By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/24 15:48:31 by pnamnil           #+#    #+#              #
-#    Updated: 2023/12/17 16:02:46 by pnamnil          ###   ########.fr        #
+#    Updated: 2023/12/19 07:44:47 by pnamnil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRCS = main.c \
 		execute/ft_parse_cmd.c \
 		execute/ft_parser.c \
 		execute/ft_parse_var.c \
+		build_in/echo.c \
 		ft_get_env.c \
 		# ft_free.c \
 		# ft_get_env.c \
@@ -62,6 +63,7 @@ l:
 
 v:
 # valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
+# valgrind --leak-check=full --track-origins=yes ./$(NAME)
 	valgrind --leak-check=full ./$(NAME)
 
 $(NAME): make_libft $(OBJS) $(HEADER)

@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:49 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/18 16:58:02 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/19 07:43:38 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,43 @@ int	is_build_in(char *str)
 		|| !ft_strncmp(str, "exit", len));
 }
 
+int	run_build_in(char **argv)
+{
+	size_t	len;
+
+	len = ft_strlen(argv[0]);
+	if (!ft_strncmp(argv[0], "echo", len))
+		return (echo(argv));
+	else
+		printf("%s: Build_in is inconstruction\n", argv[0]);
+	return (0);
+}
+
 void	run_exec(t_cmd *cmd, t_shell *sh)
 {
 	t_exec	*exec;
 	char	**argv;
+	int		exit_code;
 
 	exec = (t_exec *)cmd;
 	if (exec->argv[0] == NULL)
-		exit (0);
+	{
+		free_shell (sh);
+		exit (0);		
+	}
 	/* parse variable before use argv */
 	argv = ft_parser(exec->argv, sh);
 	if (argv == NULL)
-		exit (0);
-	if (is_build_in(exec->argv[0]))
 	{
-		printf("%s: Build_in is inconstruction\n", exec->argv[0]);	
+		free_shell (sh);
+		exit (0);
+	}
+	if (is_build_in(argv[0]))
+	{
+		exit_code = run_build_in(argv);
+		free_split (argv);
+		free_shell (sh);
+		exit (exit_code);
 	}
 	else
 		ft_execute (argv, sh);
