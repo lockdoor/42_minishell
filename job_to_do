@@ -9,6 +9,13 @@ run_redir.c
 run_cmd.c
     - parse variable before use argv [done]
 
+ft_parser.c
+    - when single qoute in double qoute should parse
+    it look on first qoute for decition
+
+get_token.c
+    - can parse "'"
+
 parser.c
     - handle heredoc on parse_redir()
 
