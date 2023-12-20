@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:25:48 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/15 10:48:13 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/20 10:58:32 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,14 @@ static void null_redir(t_cmd *cmd)
 {
 	t_redir *redir;
 
+
+	
 	redir = (t_redir *)cmd;
 	*redir->efile = 0;
+	
+	//debug
+	// printf("null_terminate: %s\n", redir->file);
+	
 	null_terminate(redir->cmd);
 }
 

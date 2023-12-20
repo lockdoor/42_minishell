@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 13:55:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/18 17:02:37 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/20 12:50:54 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ static void	redirect_input(char *file, t_shell *sh)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		exit_command(file, sh);
+
+	// debug
+	// printf("redirect_input: fd: %d\n", fd);
+		
 	dup2 (fd, STDIN_FILENO);
 	close (fd);
 }
@@ -51,6 +55,18 @@ static void	redirect_output_appand(char *file, t_shell *sh)
 	close (fd);
 }
 
+static void	redirect_input_heredoc(int fd)
+{
+	// debug
+	// printf("redirect_input_heredoc: fd: %d\n", fd);
+	
+	if (dup2(fd, STDIN_FILENO))
+	{
+		perror ("redirect_input_heredoc");
+	}
+	close (fd);
+}
+
 void	run_redir(t_cmd *cmd, t_shell *sh)
 {
 	t_redir	*redir;
@@ -66,6 +82,8 @@ void	run_redir(t_cmd *cmd, t_shell *sh)
 		redirect_output(file, sh);
 	else if (redir->mode == '+')
 		redirect_output_appand(file, sh);
+	else if (redir->mode == 'h')
+		redirect_input_heredoc(redir->fd);
 	free (file);
 	runcmd(redir->cmd, sh);
 }

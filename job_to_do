@@ -11,7 +11,7 @@ run_cmd.c
 
 ft_parser.c
     - when single qoute in double qoute should parse
-    it look on first qoute for decition
+    it look on first qoute for decision
 
 get_token.c
     - can parse "'"

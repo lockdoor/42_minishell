@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 10:33:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/19 08:29:18 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:20:20 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,15 @@ int	peek(char **ps, char *es, char *tok);
 
 // parser.c
 t_cmd	*parser(char *ps);
+t_cmd	*token_error(t_cmd *cmd, char *s);
 void	null_terminate(t_cmd *cmd);
+
+t_cmd	*pipecmd(void);
+t_cmd	*execmd(void);
+t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, char **q);
+
+// t_cmd	*redircmd_heredoc(t_cmd *cmd, int mode, char **q);
+int		fd_heredoc(char **q);
 
 // runcmd.c
 void	runcmd(t_cmd *cmd, t_shell *sh);

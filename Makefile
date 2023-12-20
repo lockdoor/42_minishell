@@ -6,7 +6,7 @@
 #    By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/24 15:48:31 by pnamnil           #+#    #+#              #
-#    Updated: 2023/12/19 07:44:47 by pnamnil          ###   ########.fr        #
+#    Updated: 2023/12/20 16:01:14 by pnamnil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,9 @@ SRCS = main.c \
 		debug/debug.c \
 		debug/debug_parser_2.c \
 		parser/gettoken.c \
-		parser/parser.c \
+		parser/parser_1.c \
+		parser/parser_2.c \
+		parser/parser_3.c \
 		parser/null_terminate.c \
 		free.c \
 		execute/runcmd.c \

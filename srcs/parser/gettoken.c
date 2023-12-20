@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:25:48 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/15 16:22:55 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/20 05:28:57 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,25 @@ static int	token_symbols(char **ps)
 	return (ret);
 }
 
-static int	qoute(char **ps)
+/* fix this */
+static int	qoute(char **ps, int q)
 {
 	char	*s;
-	int		q;
-	int		ret;
+	// int		q;
+	// int		ret;
 
-	ret = 0;
+	// ret = 0;
 	s = *ps;
-	q = *s;
+	// q = *s;
 	s++ ;
 	while (*s && *s != q)
 	{
-		if (*s == '\'' || *s == '"')
-			ret = qoute(&s);
+		// if (*s == '\'' || *s == '"')
+		// 	ret = qoute(&s);
 		s++ ;
 	}
-	if (*s != q || ret)
+	// if (*s != q || ret)
+	if (*s != q)
 		return (1);
 	*ps = s;
 	return (0);
@@ -64,7 +66,7 @@ static int token_string(char **ps)
 	while (*s && !ft_strchr(WHITESPACE, *s) && !ft_strchr(SYMBOLS, *s))
 	{
 		if (*s == '\'' || *s == '"')
-			if (qoute(&s))
+			if (qoute(&s, *s))
 			{
 				ft_putendl_fd ("not found end qoute", 2);
 				return (-1);

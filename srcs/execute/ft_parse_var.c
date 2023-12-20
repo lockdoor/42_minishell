@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 10:08:51 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/08 15:46:57 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/20 06:17:45 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,26 +54,39 @@ char	*parse_db_qoute(char **str, t_shell *sh)
 	char	*result;
 	char	*s;
 	char	*t;
-	char	*(*func)(char **, t_shell *);
 
 	s = *str;
 	result = ft_strdup("");
-	s++ ;
+	*str = ++s;
 	while (*s && *s != '"' && result)
 	{
-		func = &get_word;
 		if (*s == '$')
-			func = &parse_var;
-		else if (*s == '\'')
-			func = &parse_qoute;
-		t = func(&s, sh);
-		if (!t)
 		{
-			free (result);
-			return (NULL);
+			t = ft_substr(*str, 0, s - *str);
+			if (!t)
+			{
+				free (result);
+				return (NULL);
+			}
+			result = join_free (result, t);
+			t = parse_var(&s, sh);
+			if (!t)
+			{
+				free (result);
+				return (NULL);
+			}
+			result = join_free (result, t);
+			*str = ++s;
 		}
-		result = join_free(result, t);
+		s++ ;
 	}
+	t = ft_substr(*str, 0, s - *str);
+	if (!t)
+	{
+		free (result);
+		return (NULL);
+	}
+	result = join_free(result, t);
 	*str = ++s;
 	return (result);
 }

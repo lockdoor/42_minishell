@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parser_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 08:08:40 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/16 12:27:52 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:43:22 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* use this parser in child process only */
+
 t_cmd	*parse_pipe(char **ps, char *es);
 t_cmd	*parse_redir(t_cmd *cmd, char **ps, char *es);
 t_cmd	*parse_exec(char **ps, char *es);
-t_cmd	*token_error(t_cmd *cmd, char *s);
-
-t_cmd	*token_error(t_cmd *cmd, char *s)
-{
-	ft_putendl_fd (s, 2);
-	free_cmd (cmd);
-	return (NULL);
-}
 
 t_cmd	*parser(char *ps)
 {
@@ -30,9 +24,6 @@ t_cmd	*parser(char *ps)
 	char	*es;
 
 	es = ft_strchr(ps, 0);
-	// peek(&ps, es, "");
-	// if (*ps == 0)
-	// 	return (NULL);
 	while (*ps && ft_strchr(WHITESPACE, *ps))
 		ps++ ;
 	if (*ps == 0)
@@ -40,21 +31,6 @@ t_cmd	*parser(char *ps)
 	cmd = parse_pipe(&ps, es);
 	null_terminate (cmd);
 	return (cmd);
-}
-
-t_cmd	*pipecmd(void)
-{
-	t_pipe	*pipe;
-
-	pipe = (t_pipe *) malloc (sizeof(t_pipe));
-	if (!pipe)
-	{
-		perror ("pipecmd");
-		return (NULL);
-	}
-	ft_memset (pipe, 0, sizeof(pipe));
-	pipe->type = PIPE;
-	return ((t_cmd *)pipe);
 }
 
 t_cmd	*parse_pipe(char **ps, char *es)
@@ -86,40 +62,13 @@ t_cmd	*parse_pipe(char **ps, char *es)
 	return (cmd);
 }
 
-t_cmd	*execmd(void)
+t_cmd	*parse_exec_2(t_exec *exec, t_cmd *ret, char **ps, char *es)
 {
-	t_exec	*exec;
-
-	exec = (t_exec *) malloc (sizeof(t_exec));
-	if (!exec)
-	{
-		perror ("execmd");
-		return (NULL);
-	}
-	ft_memset(exec, 0, sizeof(t_exec));
-	exec->type = EXEC;
-	return ((t_cmd *)exec);
-}
-
-t_cmd	*parse_exec(char **ps, char *es)
-{
-	t_exec	*exec;
-	t_cmd	*ret;
 	int		token;
+	int		argv;
 	char	*q;
 	char	*eq;
-	int		argv;
 
-	ret = execmd();
-	if (!ret)
-		return (NULL);
-	peek(ps, es, "");
-	if (**ps == 0)
-		return (token_error(ret, COMMAND_NOT_FOUND));
-	exec = (t_exec *) ret;
-	ret = parse_redir(ret, ps, es);
-	if (!ret)
-		return (NULL);
 	argv = 0;
 	while (peek(ps, es, "|") == 0)
 	{
@@ -140,56 +89,43 @@ t_cmd	*parse_exec(char **ps, char *es)
 	return (ret);
 }
 
-t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, char **q)
+t_cmd	*parse_exec(char **ps, char *es)
 {
-	t_redir	*redir;
-	t_redir *new_redir;
+	t_exec	*exec;
+	t_cmd	*ret;
 
-	new_redir = (t_redir *) malloc (sizeof (t_redir));
-	if (!new_redir)
-	{
-		free_cmd (cmd);
-		perror ("redircmd");
+	ret = execmd();
+	if (!ret)
 		return (NULL);
-	}
-	new_redir->fd = fd;
-	new_redir->mode = mode;
-	new_redir->type = REDIR;
-	new_redir->file = q[0];
-	new_redir->efile = q[1];
-	if (cmd->type == REDIR)
-	{
-		redir = (t_redir *)cmd;
-		new_redir->cmd = redir->cmd;
-		redir->cmd = (t_cmd *) new_redir;
-		return ((t_cmd *)redir);
-	}
-	new_redir->cmd = cmd;
-	return ((t_cmd *)new_redir);
+	peek(ps, es, "");
+	if (**ps == 0)
+		return (token_error(ret, COMMAND_NOT_FOUND));
+	exec = (t_exec *) ret;
+	ret = parse_redir(ret, ps, es);
+	if (!ret)
+		return (NULL);
+	return (parse_exec_2(exec, ret, ps, es));
 }
 
 t_cmd	*parse_redir(t_cmd *cmd, char **ps, char *es)
 {
 	int		token;
 	char	*q[2];
+	int		fd;
 
-	
 	while (peek (ps, es, "<>"))
-	{
+	{		
 		token = gettoken(ps, es, NULL, NULL);
 		if (gettoken(ps, es, &q[0], &q[1]) != 'a')
-			return token_error (cmd, FILE_NAME_NOT_FOUND);
+			return (token_error (cmd, FILE_NAME_NOT_FOUND));
 		if (token == '<')
 			cmd = redircmd(cmd, 0, token, q);
 		else if (token == '>')
 			cmd = redircmd(cmd, 1, token, q);
 		else if (token == '+')
 			cmd = redircmd(cmd, 1, token, q);
-		// else
-		// handle heredoc here
-
-		if (!cmd)
-			return (NULL);
+		else if (token == 'h')
+			cmd = redircmd(cmd, fd_heredoc(q), token, q);
 	}
 	return (cmd);
 }
