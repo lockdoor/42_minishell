@@ -6,11 +6,25 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:26:15 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/21 10:19:49 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/21 14:52:37 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// Function to handle SIGINT
+// void sigintHandler(int signum) {
+//     printf("\nCaught SIGINT (Ctrl+C)\n");
+//     // Additional cleanup or actions can be performed here
+//     exit(EXIT_SUCCESS);
+// }
+
+// Function to handle SIGQUIT
+// void sigquitHandler(int signum) {
+//     printf("\nCaught SIGQUIT (Ctrl+\\)\n");
+//     // Additional cleanup or actions can be performed here
+//     exit(EXIT_SUCCESS);
+// }
 
 // int	exec_command(t_cmd *cmd, t_shell *sh)
 int	exec_command(char *line, t_shell *sh)
@@ -63,6 +77,17 @@ int main(void)
 	char	*line_cpy;
 	t_shell *sh;
 
+	// Register signal handlers
+    // if (signal(SIGINT, sigintHandler) == SIG_ERR) {
+    //     perror("Unable to register SIGINT handler");
+    //     exit(EXIT_FAILURE);
+    // }
+
+    // if (signal(SIGQUIT, sigquitHandler) == SIG_ERR) {
+    //     perror("Unable to register SIGQUIT handler");
+    //     exit(EXIT_FAILURE);
+    // }
+
 	sh = init_shell();
 	while (1)
 	{
@@ -82,16 +107,21 @@ int main(void)
 		{
 			free (line_cpy);
 			sh->exit_code = exec_command(line, sh);
+			free (line);
 		}
 		else
+		{
+			free (line);
 			sh->exit_code = runcmd_non_fork(sh->cmd, sh);
+			free (line_cpy);
+		}
 
 		/* debug */
 		// debug_parser(sh->cmd);
 		
 		free_cmd (sh->cmd);
-		free (line_cpy);
-		free (line);
+		// free (line_cpy);
+		// free (line);
 	}
 	ft_lstclear(&sh->env, &free_env);
 	free (sh);

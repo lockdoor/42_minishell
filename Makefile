@@ -6,7 +6,7 @@
 #    By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/24 15:48:31 by pnamnil           #+#    #+#              #
-#    Updated: 2023/12/21 08:56:26 by pnamnil          ###   ########.fr        #
+#    Updated: 2023/12/21 15:42:24 by pnamnil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,16 +40,7 @@ SRCS = main.c \
 		execute/ft_parse_var.c \
 		execute/is_non_fork.c \
 		build_in/echo.c \
-		ft_get_env.c \
-		# ft_free.c \
-		# ft_get_env.c \
-		# lexer/lexer.c \
-		# lexer/is_token.c \
-		# parser/ft_parser.c \
-		# parser/ft_parse_var.c \
-		# validate/ft_validate.c \
-		# validate/ft_validate_helper.c \
-		# build_in/ft_env.c
+		ft_get_env.c
 
 HEADERS = minishell.h
 

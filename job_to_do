@@ -18,13 +18,16 @@ get_token.c
 
 parser.c
     - handle heredoc on parse_redir() [done]
-    - parse heredoc before write to pipe
+    - parse heredoc before write to pipe, 
+        when found variable parse until non alphanum and underscholl
 
 ft_execute.c
     - handle . command with /bin/bash
 
 build in
     - echo [done]
+    - export
+        - variable must alphanum and underscholl
 
 handle exit code [done]
 
