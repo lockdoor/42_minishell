@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 08:08:40 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/20 16:43:22 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/21 06:58:13 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ t_cmd	*parse_redir(t_cmd *cmd, char **ps, char *es)
 {
 	int		token;
 	char	*q[2];
-	int		fd;
 
 	while (peek (ps, es, "<>"))
 	{		

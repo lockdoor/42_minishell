@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 10:33:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/20 16:20:20 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/21 09:01:11 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,15 @@ int	peek(char **ps, char *es, char *tok);
 
 // parser.c
 t_cmd	*parser(char *ps);
+t_cmd	*parse_exec(char **ps, char *es);
 t_cmd	*token_error(t_cmd *cmd, char *s);
 void	null_terminate(t_cmd *cmd);
 
 t_cmd	*pipecmd(void);
 t_cmd	*execmd(void);
 t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, char **q);
+
+t_cmd	*is_non_fork(char *line);
 
 // t_cmd	*redircmd_heredoc(t_cmd *cmd, int mode, char **q);
 int		fd_heredoc(char **q);
@@ -115,6 +118,7 @@ char	*get_word(char **str, t_shell *sh);
 char	*parse_token(char *s, t_shell *sh);
 char	*join_free(char *s1, char *s2);
 char	*get_env(char *name, t_shell *sh);
+int		runcmd_non_fork(t_cmd *cmd, t_shell *sh);
 
 // exec_command.c
 void	ft_execute(char **argvs, t_shell *sh);

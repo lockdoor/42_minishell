@@ -1,7 +1,7 @@
 main.c
     - handle build in [exit, cd, export, unset]
     with no pipe, it should run on parent,
-    should make new algorithm to fix it
+    should make new algorithm to fix it [done]
 
 run_redir.c
     - parse variable before use filename [done]
@@ -11,13 +11,14 @@ run_cmd.c
 
 ft_parser.c
     - when single qoute in double qoute should parse
-    it look on first qoute for decision
+    it look on first qoute for decision [done]
 
 get_token.c
-    - can parse "'"
+    - can parse "'" [done]
 
 parser.c
-    - handle heredoc on parse_redir()
+    - handle heredoc on parse_redir() [done]
+    - parse heredoc before write to pipe
 
 ft_execute.c
     - handle . command with /bin/bash

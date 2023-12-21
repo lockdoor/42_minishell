@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:26:15 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/20 15:18:30 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/21 10:19:49 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	exec_command(char *line, t_shell *sh)
 		if (!sh->cmd)
 		{
 			free (line);
+			ft_lstclear(&sh->env, &free_env);
 			exit (0);
 		}
 		runcmd(sh->cmd, sh);
@@ -56,43 +57,10 @@ t_shell	*init_shell(void)
 	return (sh);
 }
 
-int	is_build_in_non_fork(char *cmd)
-{
-	size_t	len;
-
-	if (!cmd)
-		return (0);
-	len = ft_strlen(cmd);
-	if (!ft_strncmp(cmd, "exit", len)
-		|| !ft_strncmp(cmd, "cd", len)
-		|| !ft_strncmp(cmd, "export", len)
-		|| !ft_strncmp(cmd, "unset", len))
-		return (1);
-	return (0);
-}
-
-int	is_non_fork(t_cmd *cmd)
-{
-	t_redir	*redir;
-	t_exec	*exec;
-	if (cmd->type == PIPE)
-		return (0);
-	else if (cmd->type == REDIR)
-	{
-		redir = (t_redir *)cmd;
-		return (is_non_fork (redir->cmd));
-	}
-	else if (cmd->type == EXEC)
-	{
-		exec = (t_exec *)cmd;
-		return (is_build_in_non_fork(exec->argv[0]));
-	}
-	return (0);
-}
-
 int main(void)
 {
 	char	*line;
+	char	*line_cpy;
 	t_shell *sh;
 
 	sh = init_shell();
@@ -102,24 +70,27 @@ int main(void)
 		if (!line)
 			break;
 		add_history(line);
-		// sh->cmd = parser (line);
-		// if (!sh->cmd)
-		// {
-		// 	free(line);
-		// 	continue;
-		// }
-		/* execute */
-		// if (is_non_fork(sh->cmd))
-		// 	runcmd(sh->cmd, sh);
-		// else
-		sh->exit_code = exec_command(line, sh);
-		// sh->exit_code = exec_command(sh->cmd, sh);
-		/**/
+		line_cpy = ft_strdup(line);
+		if (!line_cpy)
+		{
+			free (line);
+			perror ("main cannot copy line");
+			continue;
+		}
+		sh->cmd = is_non_fork(line_cpy);
+		if (!sh->cmd)
+		{
+			free (line_cpy);
+			sh->exit_code = exec_command(line, sh);
+		}
+		else
+			sh->exit_code = runcmd_non_fork(sh->cmd, sh);
 
 		/* debug */
 		// debug_parser(sh->cmd);
 		
 		free_cmd (sh->cmd);
+		free (line_cpy);
 		free (line);
 	}
 	ft_lstclear(&sh->env, &free_env);

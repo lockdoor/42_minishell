@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 13:55:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/20 12:50:54 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/21 06:07:37 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	redirect_input(char *file, t_shell *sh)
 
 	// debug
 	// printf("redirect_input: fd: %d\n", fd);
-		
+	
 	dup2 (fd, STDIN_FILENO);
 	close (fd);
 }
@@ -75,6 +75,8 @@ void	run_redir(t_cmd *cmd, t_shell *sh)
 	redir = (t_redir *)cmd;
 	/* parse variable before use filename */
 	file = parse_token(redir->file, sh);
+	if (!file)
+		exit_command("run_redir", sh);
 	// file = redir->file;
 	if (redir->mode == '<')
 		redirect_input(file, sh);

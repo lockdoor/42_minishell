@@ -6,7 +6,7 @@
 #    By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/24 15:48:31 by pnamnil           #+#    #+#              #
-#    Updated: 2023/12/20 16:01:14 by pnamnil          ###   ########.fr        #
+#    Updated: 2023/12/21 08:56:26 by pnamnil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS = main.c \
 		parser/parser_2.c \
 		parser/parser_3.c \
 		parser/null_terminate.c \
+		parser/is_non_fork.c \
 		free.c \
 		execute/runcmd.c \
 		execute/run_pipe.c \
@@ -37,6 +38,7 @@ SRCS = main.c \
 		execute/ft_parse_cmd.c \
 		execute/ft_parser.c \
 		execute/ft_parse_var.c \
+		execute/is_non_fork.c \
 		build_in/echo.c \
 		ft_get_env.c \
 		# ft_free.c \
