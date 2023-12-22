@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 07:11:17 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/19 09:22:25 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/22 06:40:13 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_execute(char **argvs, t_shell *sh)
 	char	*parse_cmd;
 	char	*argv[3];
 
-	if (!argvs)
+	if (!argvs || !argvs[0])
 		exit (0);
 	// exec = (t_exec *)cmd;
 	parse_cmd = ft_parse_cmd(*argvs, sh->env);

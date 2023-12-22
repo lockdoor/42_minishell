@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 08:08:40 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/21 06:58:13 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/22 08:35:13 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_cmd	*parser(char *ps)
 {
 	t_cmd	*cmd;
 	char	*es;
+	t_exec	*exec;
 
 	es = ft_strchr(ps, 0);
 	while (*ps && ft_strchr(WHITESPACE, *ps))
@@ -30,6 +31,15 @@ t_cmd	*parser(char *ps)
 		return (NULL);
 	cmd = parse_pipe(&ps, es);
 	null_terminate (cmd);
+	if (cmd->type == EXEC)
+	{
+		exec = (t_exec *)cmd;
+		if (exec->argv[0] == NULL)
+		{
+			free_cmd(cmd);
+			return (NULL);
+		}
+	}
 	return (cmd);
 }
 

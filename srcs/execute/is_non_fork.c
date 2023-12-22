@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 08:17:52 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/21 10:13:36 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/22 08:55:15 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	runredir_non_fork(t_redir *redir, t_shell *sh)
 		fd = redir->fd;
 	
 	// debug
-	// printf ("fd: %d\n", fd);
+	// printf ("runredir_non_fork: fd: %d\n", fd);
 	
 	if (fd == -1)
 	{

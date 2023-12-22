@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 15:39:13 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/17 10:39:25 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/22 08:58:51 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	free_cmd(t_cmd *cmd)
 	else if (cmd->type == REDIR)
 	{
 		redir = (t_redir *)cmd;
+		if (redir->mode == 'h')
+			close(redir->fd);
 		free_cmd((t_cmd *)redir->cmd);
 		free (cmd);
 		cmd = NULL;

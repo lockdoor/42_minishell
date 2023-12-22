@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 13:55:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/21 06:07:37 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/22 08:52:42 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	redirect_output_appand(char *file, t_shell *sh)
 static void	redirect_input_heredoc(int fd)
 {
 	// debug
-	// printf("redirect_input_heredoc: fd: %d\n", fd);
+	printf("redirect_input_heredoc: fd: %d\n", fd);
 	
 	if (dup2(fd, STDIN_FILENO))
 	{

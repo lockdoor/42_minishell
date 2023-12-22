@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 10:33:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/21 13:33:17 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/22 08:42:42 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ t_cmd	*pipecmd(void);
 t_cmd	*execmd(void);
 t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, char **q);
 
-t_cmd	*is_non_fork(char *line);
+// t_cmd	*is_non_fork(char *line);
+int	is_build_in_non_fork(t_cmd *cmd);
 
 // t_cmd	*redircmd_heredoc(t_cmd *cmd, int mode, char **q);
 int		fd_heredoc(char **q);
