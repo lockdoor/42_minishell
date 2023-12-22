@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:26:15 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/22 09:00:18 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/22 10:14:04 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,12 @@ int main(void)
 				sh->exit_code = exec_command(sh->cmd, sh);
 			}
 			free_cmd (sh->cmd);
+		
+			/* debug */
+			// debug_parser(sh->cmd);
 		}
-		/* debug */
-		// debug_parser(sh->cmd);
+		
+		// printf("env: %s\n", getenv("SHLVL"));
 
 		free (line);
 	}

@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 15:52:55 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/20 16:42:55 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/22 10:11:59 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, char **q)
 	if (cmd->type == REDIR)
 	{
 		redir = (t_redir *)cmd;
+		while(redir->cmd->type == REDIR)
+			redir = (t_redir *) redir->cmd;
 		new_redir->cmd = redir->cmd;
 		redir->cmd = (t_cmd *) new_redir;
 		return (cmd);

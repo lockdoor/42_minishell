@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 08:08:40 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/22 08:35:13 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/22 11:01:31 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ t_cmd	*parser(char *ps)
 	if (*ps == 0)
 		return (NULL);
 	cmd = parse_pipe(&ps, es);
+	if (!cmd)
+		return (NULL);
 	null_terminate (cmd);
 	if (cmd->type == EXEC)
 	{
@@ -83,8 +85,14 @@ t_cmd	*parse_exec_2(t_exec *exec, t_cmd *ret, char **ps, char *es)
 	while (peek(ps, es, "|") == 0)
 	{
 		token = gettoken(ps, es, &q, &eq);
+		
+		//debug
+		// printf ("parse_exec_2: token: %d\n", token);
+		
 		if (token == 0)
 			break ;
+		if (token == -1)
+			return (token_error(ret, NULL));
 		if (token != 'a')
 			return (token_error(ret, COMMAND_NOT_FOUND));
 		exec->argv[argv] = q;
@@ -113,19 +121,28 @@ t_cmd	*parse_exec(char **ps, char *es)
 	exec = (t_exec *) ret;
 	ret = parse_redir(ret, ps, es);
 	if (!ret)
+	{
+		// debug
+		// printf ("parse_exec: error on parse_redir\n");
+		
 		return (NULL);
+	}
 	return (parse_exec_2(exec, ret, ps, es));
 }
 
 t_cmd	*parse_redir(t_cmd *cmd, char **ps, char *es)
 {
 	int		token;
+	int		file_token;
 	char	*q[2];
 
 	while (peek (ps, es, "<>"))
 	{		
 		token = gettoken(ps, es, NULL, NULL);
-		if (gettoken(ps, es, &q[0], &q[1]) != 'a')
+		file_token = gettoken(ps, es, &q[0], &q[1]);
+		if (file_token == -1)
+			return (token_error (cmd, NULL));
+		if (file_token != 'a')
 			return (token_error (cmd, FILE_NAME_NOT_FOUND));
 		if (token == '<')
 			cmd = redircmd(cmd, 0, token, q);

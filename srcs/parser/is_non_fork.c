@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 15:22:02 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/22 08:50:00 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/22 11:29:47 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	build_in_list(char *cmd)
 	// cmd = ft_substr(argv, 0, eargv - argv);
 	if (!cmd)
 	{
-		perror ("build_in_list");
+		// perror ("build_in_list");
 		return (0);
 	}
 	len = ft_strlen(cmd);
