@@ -6,7 +6,7 @@
 #    By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/24 15:48:31 by pnamnil           #+#    #+#              #
-#    Updated: 2023/12/21 15:42:24 by pnamnil          ###   ########.fr        #
+#    Updated: 2023/12/23 08:40:30 by pnamnil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,19 @@ NAME = minishell
 LIB_PATH = libft
 SRC_DIR = srcs
 BUILD_DIR = bin
-INCLUDES = -Ilibft/includes -I$(SRC_DIR)
-LIBFT = -lft -L$(LIB_PATH) 
+
+# for machine school
+LREAD_DIR = /usr/local/opt/readline
+INCLUDES =	-I$(SRC_DIR) \
+			-I$(LIB_PATH)/includes \
+			-I$(LREAD_DIR)/include
+
+LIBS =	-lreadline -L$(LREAD_DIR)/lib  \
+		-lft -L$(LIB_PATH) \
+
+# for mac m1
+# INCLUDES = -Ilibft/includes -I$(SRC_DIR)
+# LIBS = -lft -L$(LIB_PATH) -lreadline
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
@@ -62,7 +73,7 @@ v:
 	valgrind --leak-check=full ./$(NAME)
 
 $(NAME): make_libft $(OBJS) $(HEADER)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBS)  -o $(NAME)
 
 make_libft:
 	$(MAKE) -C $(LIB_PATH);

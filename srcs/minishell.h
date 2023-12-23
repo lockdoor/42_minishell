@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 10:33:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/22 08:42:42 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/23 11:18:00 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@
 # define COMMAND_NOT_FOUND "command not found"
 
 extern char	**environ;
+
+/* global variable for specify parent or child */
+// int	g_process;
+int	g_signal;
 
 typedef struct s_env
 {
