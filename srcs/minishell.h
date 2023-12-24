@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 10:33:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/23 11:18:00 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/24 14:44:52 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
+# include <termios.h>
 
 # define SYMBOLS "|<>"
 # define WHITESPACE " \n\t\v\r"
@@ -32,12 +33,13 @@
 // error
 # define FILE_NAME_NOT_FOUND "file name not found"
 # define COMMAND_NOT_FOUND "command not found"
+# define TOKEN_ERROR "token error"
 
 extern char	**environ;
 
 /* global variable for specify parent or child */
 // int	g_process;
-int	g_signal;
+// int	g_signal;
 
 typedef struct s_env
 {
@@ -80,6 +82,12 @@ typedef struct s_shell
 	t_list		*env;
 	u_int8_t	exit_code;
 }	t_shell;
+
+// main.c
+void	sigint_handler(int signum);
+
+// init_shell.c
+t_shell	*init_shell(void);
 
 // ft_get_env.c
 t_list	*ft_get_env(void);

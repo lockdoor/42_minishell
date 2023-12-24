@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 08:08:40 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/22 11:01:31 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/24 12:19:11 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@ t_cmd	*parser(char *ps)
 		ps++ ;
 	if (*ps == 0)
 		return (NULL);
+		
 	cmd = parse_pipe(&ps, es);
+	// cmd = parse_exec(&ps, es);
+	
 	if (!cmd)
 		return (NULL);
-	null_terminate (cmd);
 	if (cmd->type == EXEC)
 	{
 		exec = (t_exec *)cmd;
@@ -42,7 +44,27 @@ t_cmd	*parser(char *ps)
 			return (NULL);
 		}
 	}
+	null_terminate (cmd);
 	return (cmd);
+}
+
+int	is_no_cmd(t_cmd *cmd, char	*s)
+{
+	t_exec	*exec;
+	if (!cmd)
+		return (1);
+	if (cmd->type == EXEC)
+	{
+		exec = (t_exec *)cmd;
+		if (exec->argv[0] == NULL)
+		{
+			free_cmd(cmd);
+			if (s)
+				ft_putendl_fd(s, 2);
+			return (1);
+		}
+	}
+	return (0);
 }
 
 t_cmd	*parse_pipe(char **ps, char *es)
@@ -51,11 +73,24 @@ t_cmd	*parse_pipe(char **ps, char *es)
 	t_pipe	*pipe;
 
 	cmd = parse_exec(ps, es);
-	if (cmd == NULL)
+	if (is_no_cmd(cmd, TOKEN_ERROR))
 		return (NULL);
+
+	//debug
+	// printf ("parse_pipe: ps: %d\n", **ps);
+		
 	if (peek(ps, es, "|"))
 	{
 		gettoken (ps, es, NULL, NULL);
+
+		peek(ps, es, "");
+		if (**ps == 0)
+		{
+			free_cmd(cmd);
+			ft_putendl_fd(TOKEN_ERROR, 2);
+			return (NULL);
+		}
+		
 		pipe = (t_pipe *) pipecmd ();
 		if (pipe == NULL)
 		{
@@ -69,6 +104,7 @@ t_cmd	*parse_pipe(char **ps, char *es)
 			free_cmd ((t_cmd *)pipe);
 			return (NULL);
 		}
+		// return ((t_cmd *) pipe);
 		cmd = (t_cmd *) pipe;
 	}
 	return (cmd);
@@ -82,7 +118,7 @@ t_cmd	*parse_exec_2(t_exec *exec, t_cmd *ret, char **ps, char *es)
 	char	*eq;
 
 	argv = 0;
-	while (peek(ps, es, "|") == 0)
+	while (**ps && peek(ps, es, "|") == 0)
 	{
 		token = gettoken(ps, es, &q, &eq);
 		
@@ -101,6 +137,9 @@ t_cmd	*parse_exec_2(t_exec *exec, t_cmd *ret, char **ps, char *es)
 		ret = parse_redir(ret, ps, es);
 		if (!ret)
 			return (NULL);
+		
+		// if (**ps == 0)
+		// 	break;
 	}
 	exec->argv[argv] = 0;
 	exec->eargv[argv] = 0;

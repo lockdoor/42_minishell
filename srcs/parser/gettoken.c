@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:25:48 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/20 05:28:57 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/24 11:17:19 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,19 @@ int	peek(char **ps, char *es, char *tok)
 {
 	char	*s;
 
+
+	// (void) es;
+	// if (!*ps || !**ps)
+	// 	return (0);
+	// debug
+	// printf ("peek: tok: %s, %d, %c\n",tok, **ps, **ps);
 	s = *ps;
 	while (s < es && ft_strchr(WHITESPACE, *s))
+	// while (*s && ft_strchr(WHITESPACE, *s))
 		s++ ;
 	*ps = s;
+	// if (!*s)
+	// 	return (0);
 	return (*s && ft_strchr(tok, *s));
 }
 
@@ -101,7 +110,7 @@ int	gettoken(char **ps, char *es, char **q, char **eq)
 	ret = *s;
 	if (ft_strchr(SYMBOLS, *s))
 		ret = token_symbols(&s);
-	else
+	else if (ret)
 		ret = token_string(&s);
 	if (eq)
 		*eq = s;
