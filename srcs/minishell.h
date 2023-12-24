@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 10:33:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/24 14:44:52 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/24 16:25:17 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_shell
 	t_cmd		*cmd;
 	t_list		*env;
 	u_int8_t	exit_code;
+	u_int8_t	exit;
 }	t_shell;
 
 // main.c
@@ -138,8 +139,12 @@ int		runcmd_non_fork(t_cmd *cmd, t_shell *sh);
 void	ft_execute(char **argvs, t_shell *sh);
 char	*ft_parse_cmd(char	*cmd, t_list *env);
 
+// exec/utils.c
+int	argv_len(char **argv);
+
 // build_in
 int	echo(char **argv);
+int	ft_exit(char **argv, t_shell *sh);
 
 // free.c
 void	free_cmd(t_cmd *cmd);

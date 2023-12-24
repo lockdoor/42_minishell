@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:26:15 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/24 14:43:57 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/24 16:47:19 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,11 @@ int main(void)
 {
 	char	*line;
 	t_shell *sh;
+	int		status;
 
 
 	sh = init_shell();
-	while (1)
+	while (!sh->exit)
 	{
 		/* global variable= */
 		g_signal = 0;
@@ -99,7 +100,8 @@ int main(void)
 		free (line);
 	}
 	ft_lstclear(&sh->env, &free_env);
+	status = sh->exit_code;
 	free (sh);
-	free (line);
-	return (0);
+	// free (line);
+	return (status);
 }

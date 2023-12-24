@@ -6,7 +6,7 @@
 #    By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/24 15:48:31 by pnamnil           #+#    #+#              #
-#    Updated: 2023/12/24 14:46:05 by pnamnil          ###   ########.fr        #
+#    Updated: 2023/12/24 16:30:27 by pnamnil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,8 +52,10 @@ SRCS = main.c \
 		execute/ft_parser.c \
 		execute/ft_parse_var.c \
 		execute/is_non_fork.c \
-		build_in/echo.c 
-
+		execute/utils.c \
+		build_in/echo.c \
+		build_in/exit.c 
+		
 HEADERS = minishell.h
 
 all: $(NAME)

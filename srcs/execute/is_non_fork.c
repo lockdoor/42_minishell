@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 08:17:52 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/22 08:55:15 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/24 16:42:41 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,36 +47,40 @@ int	run_build_in_non_fork(t_exec *cmd, t_shell *sh)
 {
 	char	**argv;
 	size_t	len;
+	int		ret;
 
 	argv = ft_parser(cmd->argv, sh);
 	if (argv == NULL)
 		return (EXIT_FAILURE);
 	len = ft_strlen(argv[0]);
-	if (ft_strncmp(argv[0], "exit", len))
+	if (!ft_strncmp(argv[0], "exit", len))
 	{
-		printf("%s: non_fork Build_in is inconstruction\n", argv[0]);
-		return (0);
+		// printf("%s: non_fork Build_in is inconstruction\n", argv[0]);
+		// return (0);
+		ret = ft_exit(argv, sh);
 	}
-	else if (ft_strncmp(argv[0], "cd", len))
+	else if (!ft_strncmp(argv[0], "cd", len))
 	{
 		printf("%s: non_fork Build_in is inconstruction\n", argv[0]);
-		return (0);
+		ret = 0;
 	}
-	else if (ft_strncmp(argv[0], "export", len))
+	else if (!ft_strncmp(argv[0], "export", len))
 	{
 		printf("%s: non_fork Build_in is inconstruction\n", argv[0]);
-		return (0);
+		ret = 0;
 	}
-	else if (ft_strncmp(argv[0], "unset", len))
+	else if (!ft_strncmp(argv[0], "unset", len))
 	{
 		printf("%s: non_fork Build_in is inconstruction\n", argv[0]);
-		return (0);
+		ret = 0;
 	}
 	else
 	{
 		printf("%s: non_fork Build_in must fork\n", argv[0]);
-		return (EXIT_FAILURE);
+		ret = 1;
 	}
+	free_split(argv);
+	return (ret);
 }
 
 int	runcmd_non_fork(t_cmd *cmd, t_shell *sh)

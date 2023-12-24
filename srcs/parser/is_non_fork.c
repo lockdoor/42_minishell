@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 15:22:02 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/22 11:29:47 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/24 16:37:42 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	build_in_list(char *cmd)
 		|| !ft_strncmp(cmd, "export", len)
 		|| !ft_strncmp(cmd, "unset", len))
 	{
-		printf ("build_in_list: cmd: %s\n", cmd);
+		// printf ("build_in_list: cmd: %s\n", cmd);
 		// free (cmd);
 		return (1);
 	}

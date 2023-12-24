@@ -6,21 +6,11 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:26:55 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/19 07:56:57 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/24 15:27:13 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	argv_len(char **argv)
-{
-	int	i;
-
-	i = 0;
-	while (argv[i])
-		i++ ;
-	return (i);
-}
 
 char	**error_parse_argv(char **argv, int i)
 {

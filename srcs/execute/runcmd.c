@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:49 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/19 07:43:38 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/24 16:30:10 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,15 @@ int	is_build_in(char *str)
 		|| !ft_strncmp(str, "exit", len));
 }
 
-int	run_build_in(char **argv)
+int	run_build_in(char **argv, t_shell *sh)
 {
 	size_t	len;
 
 	len = ft_strlen(argv[0]);
 	if (!ft_strncmp(argv[0], "echo", len))
 		return (echo(argv));
+	else if (!ft_strncmp(argv[0], "exit", len))
+		return (ft_exit(argv, sh));	
 	else
 		printf("%s: Build_in is inconstruction\n", argv[0]);
 	return (0);
@@ -61,7 +63,7 @@ void	run_exec(t_cmd *cmd, t_shell *sh)
 	}
 	if (is_build_in(argv[0]))
 	{
-		exit_code = run_build_in(argv);
+		exit_code = run_build_in(argv, sh);
 		free_split (argv);
 		free_shell (sh);
 		exit (exit_code);
