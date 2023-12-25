@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 08:17:52 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/24 16:42:41 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/25 14:35:29 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	runredir_non_fork(t_redir *redir, t_shell *sh)
 		return (EXIT_FAILURE);
 	}
 	free (file);
+	if (redir->mode == '>' || redir->mode == '+')
+		dup2 (fd, STDOUT_FILENO);
 	close (fd);
 	return (0);
 }
@@ -46,40 +48,34 @@ int	runredir_non_fork(t_redir *redir, t_shell *sh)
 int	run_build_in_non_fork(t_exec *cmd, t_shell *sh)
 {
 	char	**argv;
-	size_t	len;
 	int		ret;
 
 	argv = ft_parser(cmd->argv, sh);
 	if (argv == NULL)
 		return (EXIT_FAILURE);
-	len = ft_strlen(argv[0]);
-	if (!ft_strncmp(argv[0], "exit", len))
-	{
-		// printf("%s: non_fork Build_in is inconstruction\n", argv[0]);
-		// return (0);
+
+	/* this point can handle last command */
+	
+	if (!ft_strncmp(argv[0], "exit", -1))
 		ret = ft_exit(argv, sh);
-	}
-	else if (!ft_strncmp(argv[0], "cd", len))
+	else if (!ft_strncmp(argv[0], "cd", -1))
 	{
 		printf("%s: non_fork Build_in is inconstruction\n", argv[0]);
 		ret = 0;
 	}
-	else if (!ft_strncmp(argv[0], "export", len))
-	{
-		printf("%s: non_fork Build_in is inconstruction\n", argv[0]);
-		ret = 0;
-	}
-	else if (!ft_strncmp(argv[0], "unset", len))
-	{
-		printf("%s: non_fork Build_in is inconstruction\n", argv[0]);
-		ret = 0;
-	}
+	else if (!ft_strncmp(argv[0], "export", -1))
+		ret = ft_export(argv, sh);
+	else if (!ft_strncmp(argv[0], "unset", -1))
+		ret = ft_unset(argv, sh);
 	else
 	{
 		printf("%s: non_fork Build_in must fork\n", argv[0]);
 		ret = 1;
 	}
 	free_split(argv);
+	close (STDOUT_FILENO);
+	dup(STDIN_FILENO);
+	dup(STDOUT_FILENO);
 	return (ret);
 }
 

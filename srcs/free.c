@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 15:39:13 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/22 08:58:51 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/25 18:00:37 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,12 @@ void	free_env(void *data)
 
 	env = (t_env *) data;
 	free (env->name);
-	free (env->value);
+	if (env->value)
+		free (env->value);
 	free (env);
+	env->name = NULL;
+	env->value = NULL;
+	env = NULL;
 }
 
 void	free_shell(t_shell *sh)

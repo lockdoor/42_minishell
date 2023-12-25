@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 10:33:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/24 16:25:17 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/25 16:16:57 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@
 # define PIPE  3
 # define MAXARGS 10
 
+# define TRUE 1
+# define FALSE 0
+
 // error
 # define FILE_NAME_NOT_FOUND "file name not found"
 # define COMMAND_NOT_FOUND "command not found"
@@ -43,8 +46,9 @@ extern char	**environ;
 
 typedef struct s_env
 {
-    char    *name;
-    char    *value;
+    char    	*name;
+    char    	*value;
+	u_int8_t	env;
 }   t_env;
 
 typedef struct s_cmd
@@ -92,6 +96,7 @@ t_shell	*init_shell(void);
 
 // ft_get_env.c
 t_list	*ft_get_env(void);
+t_env	*ft_set_env(char *s);
 
 
 // debug.c
@@ -145,6 +150,10 @@ int	argv_len(char **argv);
 // build_in
 int	echo(char **argv);
 int	ft_exit(char **argv, t_shell *sh);
+int	ft_env(char **argv, t_shell *sh);
+int	ft_unset(char **argv, t_shell *sh);
+int	ft_pwd(void);
+int	ft_export(char **argv, t_shell *sh);
 
 // free.c
 void	free_cmd(t_cmd *cmd);

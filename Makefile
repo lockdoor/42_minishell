@@ -6,7 +6,7 @@
 #    By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/24 15:48:31 by pnamnil           #+#    #+#              #
-#    Updated: 2023/12/24 16:30:27 by pnamnil          ###   ########.fr        #
+#    Updated: 2023/12/25 16:19:25 by pnamnil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,17 +16,17 @@ SRC_DIR = srcs
 BUILD_DIR = bin
 
 # for machine school
-LREAD_DIR = /usr/local/opt/readline
-INCLUDES =	-I$(SRC_DIR) \
-			-I$(LIB_PATH)/includes \
-			-I$(LREAD_DIR)/include
+# LREAD_DIR = /usr/local/opt/readline
+# INCLUDES =	-I$(SRC_DIR) \
+# 			-I$(LIB_PATH)/includes \
+# 			-I$(LREAD_DIR)/include
 
-LIBS =	-lreadline -L$(LREAD_DIR)/lib  \
-		-lft -L$(LIB_PATH) \
+# LIBS =	-lreadline -L$(LREAD_DIR)/lib  \
+# 		-lft -L$(LIB_PATH)
 
 # for mac m1
-# INCLUDES = -Ilibft/includes -I$(SRC_DIR)
-# LIBS = -lft -L$(LIB_PATH) -lreadline
+INCLUDES = -Ilibft/includes -I$(SRC_DIR)
+LIBS = -lft -L$(LIB_PATH) -lreadline
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
@@ -54,7 +54,11 @@ SRCS = main.c \
 		execute/is_non_fork.c \
 		execute/utils.c \
 		build_in/echo.c \
-		build_in/exit.c 
+		build_in/exit.c \
+		build_in/env.c \
+		build_in/unset.c \
+		build_in/pwd.c \
+		build_in/export.c 
 		
 HEADERS = minishell.h
 
@@ -76,7 +80,7 @@ v:
 	valgrind --leak-check=full ./$(NAME)
 
 $(NAME): make_libft $(OBJS) $(HEADER)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBS)  -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBS)  -o $(NAME)
 
 make_libft:
 	$(MAKE) -C $(LIB_PATH);

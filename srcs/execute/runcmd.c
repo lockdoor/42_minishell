@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:49 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/24 16:30:10 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/25 13:51:52 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	is_build_in(char *str)
 
 	if (!str)
 		return (0);
-	len = ft_strlen(str);
+	// len = ft_strlen(str);
+	len = -1;
 	return (!ft_strncmp(str, "echo", len)
 		|| !ft_strncmp(str, "cd", len)
 		|| !ft_strncmp(str, "pwd", len)
@@ -32,11 +33,20 @@ int	run_build_in(char **argv, t_shell *sh)
 {
 	size_t	len;
 
-	len = ft_strlen(argv[0]);
+	// len = ft_strlen(argv[0]);
+	len = -1;
 	if (!ft_strncmp(argv[0], "echo", len))
 		return (echo(argv));
 	else if (!ft_strncmp(argv[0], "exit", len))
 		return (ft_exit(argv, sh));	
+	else if (!ft_strncmp(argv[0], "env", len))
+		return (ft_env(argv, sh));
+	else if (!ft_strncmp(argv[0], "unset", len))
+		return (ft_unset(argv, sh));
+	else if (!ft_strncmp(argv[0], "pwd", len))
+		return (ft_pwd());
+	else if (!ft_strncmp(argv[0], "export", len))
+		return (ft_export(argv, sh));
 	else
 		printf("%s: Build_in is inconstruction\n", argv[0]);
 	return (0);
@@ -59,8 +69,9 @@ void	run_exec(t_cmd *cmd, t_shell *sh)
 	if (argv == NULL)
 	{
 		free_shell (sh);
-		exit (0);
+		exit (EXIT_FAILURE);
 	}
+
 	if (is_build_in(argv[0]))
 	{
 		exit_code = run_build_in(argv, sh);

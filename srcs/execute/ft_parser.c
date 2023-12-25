@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:26:55 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/24 15:27:13 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/25 08:43:31 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ char	*parse_token(char *s, t_shell *sh)
 			return (NULL);
 		}
 		result = join_free(result, t);
+		
+		// debug
+		// printf ("parse_token: %s\n", result);
 	}
 	return (result);
 }
@@ -90,7 +93,8 @@ char	*get_env(char *name, t_shell *sh)
 	t_list	*lstenv;
 
 	lstenv = sh->env;
-	len = ft_strlen(name);
+	// len = ft_strlen(name);
+	len = -1;
 	while (lstenv)
 	{
 		env = (t_env *) lstenv->content;
@@ -102,6 +106,8 @@ char	*get_env(char *name, t_shell *sh)
 	if (!lstenv)
 		return (ft_strdup(""));
 	env = (t_env *) lstenv->content;
+	// debug
+	// printf ("get_env: %s=%s\n", env->name, env->value);
 	return (ft_strdup(env->value));
 }
 

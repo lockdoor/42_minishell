@@ -1,42 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/19 06:42:42 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/25 15:50:53 by pnamnil          ###   ########.fr       */
+/*   Created: 2023/12/25 10:03:27 by pnamnil           #+#    #+#             */
+/*   Updated: 2023/12/25 10:15:47 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	echo(char **argv)
+int	ft_pwd(void)
 {
-	int		i;
-	int		newline;
+	char	buf[100];
 
-	i = 1;
-	newline = 1;
-	if (!argv[i])
+	if (!getcwd(buf, 100))
 	{
-		printf ("\n");
-		return (0);
+		perror ("pwd");
+		return (EXIT_FAILURE);
 	}
-	if (!ft_strncmp(argv[i], "-n", -1))
-	{
-		i++;
-		newline = 0;
-	}
-	while(argv[i])
-	{
-		printf("%s", argv[i]);
-		if (argv[i + 1] != NULL)
-			printf(" ");
-		i++ ;	
-	}
-	if (newline)
-		printf ("\n");
+	printf("%s\n", buf);
 	return (0);
 }

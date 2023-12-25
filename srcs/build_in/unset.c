@@ -1,42 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/19 06:42:42 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/25 15:50:53 by pnamnil          ###   ########.fr       */
+/*   Created: 2023/12/25 08:48:44 by pnamnil           #+#    #+#             */
+/*   Updated: 2023/12/25 15:29:42 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	echo(char **argv)
+t_list *rm_node(t_list *lst, char *argv)
+{
+	t_env	*env;
+	t_list	*next;
+
+	if (!lst)
+		return (NULL);
+	env = (t_env *)lst->content;
+	if (!ft_strncmp(env->name, argv, -1))
+	{
+		next = lst->next;
+		free_env (env);
+		free (lst);
+		return (next);
+	}
+	lst->next = rm_node(lst->next, argv);
+	return (lst);
+}
+
+int	ft_unset(char **argv, t_shell *sh)
 {
 	int		i;
-	int		newline;
 
-	i = 1;
-	newline = 1;
-	if (!argv[i])
-	{
-		printf ("\n");
-		return (0);
-	}
-	if (!ft_strncmp(argv[i], "-n", -1))
-	{
-		i++;
-		newline = 0;
-	}
-	while(argv[i])
-	{
-		printf("%s", argv[i]);
-		if (argv[i + 1] != NULL)
-			printf(" ");
-		i++ ;	
-	}
-	if (newline)
-		printf ("\n");
+	i = 0;
+	while (argv[++i])
+		sh->env = rm_node(sh->env, argv[i]);
 	return (0);
 }

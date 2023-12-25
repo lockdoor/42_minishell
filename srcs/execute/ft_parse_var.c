@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 10:08:51 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/20 06:17:45 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/25 08:44:11 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ char	*parse_var(char **str, t_shell *sh)
 		return (ft_itoa(sh->exit_code));
 	}
 	var = ft_substr(*str, 1, s - *str - 1);
+
+	// debug
+	// printf ("parse_var: %s\n", var);
+	
 	*str = s;
 	if (!var)
 		return (NULL);

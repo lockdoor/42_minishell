@@ -28,9 +28,18 @@ build in
     - echo [done]
     - export
         - variable must alphanum and underscholl
+            not prefix with number
+        - name and value must parse variable before set
+            it print error on stderr
+            export: `2KK=99999': not a valid identifier
+            and return 1
 
 handle exit code [done]
 
 handle signel [done]
 
 handle shell level
+
+handle last command _
+    - if pipe last command is NULL
+    - is_build_in_non_fork
