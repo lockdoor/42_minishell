@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:49 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/25 13:51:52 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/26 06:47:00 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ void	run_exec(t_cmd *cmd, t_shell *sh)
 	int		exit_code;
 
 	exec = (t_exec *)cmd;
-	if (exec->argv[0] == NULL)
-	{
-		free_shell (sh);
-		exit (0);		
-	}
+	// if (exec->argv[0] == NULL)
+	// {
+	// 	free_shell (sh);
+	// 	exit (0);		
+	// }
 	/* parse variable before use argv */
 	argv = ft_parser(exec->argv, sh);
 	if (argv == NULL)

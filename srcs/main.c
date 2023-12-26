@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:26:15 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/25 14:02:11 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/26 06:28:22 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	sigint_handler(int signum)
 			ft_putchar_fd('\n', STDOUT_FILENO);
 		rl_on_new_line();
 		/* on m1 cannot use it */
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	else if (g_signal == -1)

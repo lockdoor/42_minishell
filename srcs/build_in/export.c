@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 10:17:21 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/25 18:46:41 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/26 06:35:11 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,13 @@ static int	get_export(t_shell *sh)
 	t_list	*envlst;
 	t_env	*env;
 	
-	printf ("get_export: work\n");
+	// debug
+	// printf ("get_export: work\n");
 	
 	envlst = ft_lstmap(sh->env, &dup_env, &free_env);
 
 	// debug has error in dup_env
-	printf ("get_export: after lstmap\n");
+	// printf ("get_export: after lstmap\n");
 	
 	if (!envlst)
 		return (EXIT_FAILURE);
@@ -157,10 +158,7 @@ int	ft_export(char **argv, t_shell *sh)
 		if (!env)
 			return (EXIT_FAILURE);
 		// debug
-		if (env->value)
-			printf ("ft_export: %s=%s\n", env->name, env->value);
-		else
-			printf ("ft_export: %s\n", env->name);
+		// if (env->value)
 		
 		if (!found_env(sh->env, env))
 		{

@@ -6,7 +6,7 @@
 #    By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/24 15:48:31 by pnamnil           #+#    #+#              #
-#    Updated: 2023/12/25 16:19:25 by pnamnil          ###   ########.fr        #
+#    Updated: 2023/12/26 06:28:06 by pnamnil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,17 +16,16 @@ SRC_DIR = srcs
 BUILD_DIR = bin
 
 # for machine school
-# LREAD_DIR = /usr/local/opt/readline
-# INCLUDES =	-I$(SRC_DIR) \
-# 			-I$(LIB_PATH)/includes \
-# 			-I$(LREAD_DIR)/include
-
-# LIBS =	-lreadline -L$(LREAD_DIR)/lib  \
-# 		-lft -L$(LIB_PATH)
+LREAD_DIR = /usr/local/opt/readline
+INCLUDES =	-I$(SRC_DIR) \
+			-I$(LIB_PATH)/includes \
+			-I$(LREAD_DIR)/include
+LIBS =	-lreadline -L$(LREAD_DIR)/lib  \
+		-lft -L$(LIB_PATH)
 
 # for mac m1
-INCLUDES = -Ilibft/includes -I$(SRC_DIR)
-LIBS = -lft -L$(LIB_PATH) -lreadline
+# INCLUDES = -Ilibft/includes -I$(SRC_DIR)
+# LIBS = -lft -L$(LIB_PATH) -lreadline
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
