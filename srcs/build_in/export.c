@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 10:17:21 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/26 06:35:11 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/26 07:33:40 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,8 @@ static int	get_export(t_shell *sh)
 	t_list	*lst;
 	t_list	*envlst;
 	t_env	*env;
-	
-	// debug
-	// printf ("get_export: work\n");
-	
-	envlst = ft_lstmap(sh->env, &dup_env, &free_env);
 
-	// debug has error in dup_env
-	// printf ("get_export: after lstmap\n");
-	
+	envlst = ft_lstmap(sh->env, &dup_env, &free_env);
 	if (!envlst)
 		return (EXIT_FAILURE);
 	sort_env(envlst);
@@ -108,68 +101,14 @@ static int	get_export(t_shell *sh)
 	return (0);
 }
 
-int	export_token_error(char *s)
-{
-	ft_putstr_fd("export: `", 2);
-	ft_putstr_fd(s, 2);
-	ft_putendl_fd("': not a valid identifier", 2);
-	free (s);
-	return (EXIT_FAILURE);
-}
-
-int	found_env(t_list *lst, t_env *env)
-{
-	t_env	*oldenv;
-	while (lst)
-	{
-		oldenv = (t_env *) lst->content;
-		if (!ft_strncmp(oldenv->name, env->name, -1))
-		{
-			if (oldenv->value)
-				free(oldenv->value);
-			oldenv->value = env->value;
-			free_env (env);
-			return (TRUE);
-		}
-		lst = lst->next;
-	}
-	return (FALSE);
-}
-
 int	ft_export(char **argv, t_shell *sh)
 {
-	int		i;
-	char	*parse;
-	t_env	*env;
-	t_list	*new;
-
-	if (argv_len(argv) == 1)
+	int		len;
+	
+	len = argv_len(argv);
+	if (len == 1)
 		return (get_export(sh));
-	i = 0;
-	while (argv[++i])
-	{
-		parse = parse_token(argv[i], sh);
-		if (!parse)
-			return (EXIT_FAILURE);
-		if (!ft_isalpha(*parse) && *parse != '_')
-			return (export_token_error(parse));
-		env = ft_set_env(parse);
-		free (parse);
-		if (!env)
-			return (EXIT_FAILURE);
-		// debug
-		// if (env->value)
-		
-		if (!found_env(sh->env, env))
-		{
-			new = ft_lstnew((void *)env);
-			if (!new)
-			{
-				free_env(env);
-				return (EXIT_FAILURE);
-			}
-			ft_lstadd_back(&sh->env, new);
-		}
-	}
+	if (len > 1)
+		return (set_exports(argv, sh));
 	return (0);
 }

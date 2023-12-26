@@ -1,46 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_non_fork.c                                      :+:      :+:    :+:   */
+/*   set_last_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/20 15:22:02 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/26 08:34:50 by pnamnil          ###   ########.fr       */
+/*   Created: 2023/12/26 08:34:13 by pnamnil           #+#    #+#             */
+/*   Updated: 2023/12/26 08:41:32 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	build_in_list(char *cmd)
+static void	set_last_command(char *argv, t_shell *sh)
 {
-	if (!cmd)
-		return (0);
-	return (!ft_strncmp(cmd, "exit", -1)
-		|| !ft_strncmp(cmd, "cd", -1)
-		|| !ft_strncmp(cmd, "export", -1)
-		|| !ft_strncmp(cmd, "unset", -1));
+	char	*last;
+
+	last = ft_strjoin("_=", argv);
+	if (!last)
+	{
+		perror ("set_last_cmd");
+		return ;
+	}
+	set_export(last, sh);
+	free (last);
 }
 
-/* this point can handle last command */
-int	is_build_in_non_fork(t_cmd *cmd, t_shell *sh)
+void set_last_cmd(t_cmd *cmd, t_shell *sh)
 {
 	t_redir	*redir;
 	t_exec	*exec;
 
 	if (!cmd)
-		return (0);
+		return ;
 	if (cmd->type == PIPE)
-		return (0);
+	{
+		set_last_command ("", sh);
+		return ;
+	}
 	if (cmd->type == REDIR)
 	{
 		redir = (t_redir *)cmd;
-		return (is_build_in_non_fork(redir->cmd, sh));	
+		set_last_cmd(redir->cmd, sh);	
 	}
 	else if (cmd->type == EXEC)
 	{
 		exec = (t_exec *)cmd;
-		return (build_in_list(exec->argv[0]));
+		set_last_command (exec->argv[0], sh);
 	}
-	return (0);
 }

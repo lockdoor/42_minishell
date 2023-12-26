@@ -6,7 +6,7 @@
 #    By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/24 15:48:31 by pnamnil           #+#    #+#              #
-#    Updated: 2023/12/26 06:28:06 by pnamnil          ###   ########.fr        #
+#    Updated: 2023/12/26 08:40:19 by pnamnil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRCS = main.c \
 		debug/debug.c \
 		free.c \
 		ft_get_env.c \
+		set_last_cmd.c \
 		debug/debug_parser_2.c \
 		parser/gettoken.c \
 		parser/parser_1.c \
@@ -57,7 +58,8 @@ SRCS = main.c \
 		build_in/env.c \
 		build_in/unset.c \
 		build_in/pwd.c \
-		build_in/export.c 
+		build_in/export.c \
+		build_in/set_export.c 
 		
 HEADERS = minishell.h
 

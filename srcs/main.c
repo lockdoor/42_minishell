@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:26:15 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/26 06:28:22 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/26 08:42:18 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int main(void)
 		--g_signal ;
 		if (sh->cmd)
 		{
-			if (sh->cmd->type != PIPE && is_build_in_non_fork(sh->cmd))
+			if (is_build_in_non_fork(sh->cmd, sh))
 			{
 				sh->exit_code = runcmd_non_fork(sh->cmd, sh);
 			}
@@ -93,7 +93,7 @@ int main(void)
 			
 			/* debug */
 			// debug_parser(sh->cmd);
-		
+			set_last_cmd(sh->cmd, sh);
 			free_cmd (sh->cmd);
 		}
 		

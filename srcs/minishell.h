@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 10:33:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/26 07:12:01 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/26 08:40:00 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ t_cmd	*execmd(void);
 t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, char **q);
 
 // t_cmd	*is_non_fork(char *line);
-int	is_build_in_non_fork(t_cmd *cmd);
+int	is_build_in_non_fork(t_cmd *cmd, t_shell *sh);
 
 // t_cmd	*redircmd_heredoc(t_cmd *cmd, int mode, char **q);
 int		fd_heredoc(char **q);
@@ -144,6 +144,9 @@ int		runcmd_non_fork(t_cmd *cmd, t_shell *sh);
 void	ft_execute(char **argvs, t_shell *sh);
 char	*ft_parse_cmd(char	*cmd, t_list *env);
 
+//set_last_cmd.c
+void set_last_cmd(t_cmd *cmd, t_shell *sh);
+
 // exec/utils.c
 int	argv_len(char **argv);
 
@@ -154,6 +157,8 @@ int	ft_env(char **argv, t_shell *sh);
 int	ft_unset(char **argv, t_shell *sh);
 int	ft_pwd(void);
 int	ft_export(char **argv, t_shell *sh);
+int	set_exports(char **argv, t_shell *sh);
+int set_export(char *argv, t_shell *sh);
 
 // free.c
 void	free_cmd(t_cmd *cmd);
