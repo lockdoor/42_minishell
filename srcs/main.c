@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:26:15 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/26 08:42:18 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/26 16:13:23 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int main(void)
 		--g_signal ;
 		if (sh->cmd)
 		{
+			parse_here(sh->cmd, sh);
 			if (is_build_in_non_fork(sh->cmd, sh))
 			{
 				sh->exit_code = runcmd_non_fork(sh->cmd, sh);

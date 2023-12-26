@@ -6,7 +6,7 @@
 #    By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/24 15:48:31 by pnamnil           #+#    #+#              #
-#    Updated: 2023/12/26 09:09:25 by pnamnil          ###   ########.fr        #
+#    Updated: 2023/12/26 16:12:42 by pnamnil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRCS = main.c \
 		parser/parser_3.c \
 		parser/null_terminate.c \
 		parser/is_non_fork.c \
+		parser/parse_here.c \
 		execute/runcmd.c \
 		execute/run_pipe.c \
 		execute/run_redir.c \

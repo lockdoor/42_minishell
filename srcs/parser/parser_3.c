@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 15:57:06 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/22 10:57:36 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/26 15:21:43 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,38 +45,6 @@ int	fd_heredoc(char **q)
 	close (p[1]);
 	return (p[0]);
 }
-
-/*
-t_cmd	*redircmd_heredoc(t_cmd *cmd, int mode, char **q)
-{
-	t_redir	*redir;
-	t_redir	*new_redir;
-	int		fd;
-
-	new_redir = (t_redir *) malloc (sizeof(t_redir));
-	fd = fd_heredoc(q);
-	if (!new_redir || fd == -1)
-	{
-		free_cmd (cmd);
-		perror ("redircmd_heredoc");
-		return (NULL);
-	}
-	new_redir->mode = mode;
-	new_redir->type = REDIR;
-	new_redir->file = q[0];
-	new_redir->efile = q[1];
-	new_redir->fd = fd;
-	if (cmd->type == REDIR)
-	{
-		redir = (t_redir *)cmd;
-		new_redir->cmd = redir->cmd;
-		redir->cmd = (t_cmd *) new_redir;
-		return (cmd);
-	}
-	new_redir->cmd = cmd;
-	return ((t_cmd *)new_redir);
-}
-*/
 
 t_cmd	*token_error(t_cmd *cmd, char *s)
 {

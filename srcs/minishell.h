@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 10:33:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/26 11:15:57 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/26 15:52:58 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,8 @@ t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, char **q);
 int	is_build_in_non_fork(t_cmd *cmd, t_shell *sh);
 
 // t_cmd	*redircmd_heredoc(t_cmd *cmd, int mode, char **q);
-int		fd_heredoc(char **q);
+// int		fd_heredoc(char **q);
+void	parse_here(t_cmd *cmd, t_shell *sh);
 
 // runcmd.c
 void	runcmd(t_cmd *cmd, t_shell *sh);

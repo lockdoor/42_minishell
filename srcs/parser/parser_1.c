@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 08:08:40 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/24 12:19:11 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/26 15:28:05 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,8 @@ t_cmd	*parse_redir(t_cmd *cmd, char **ps, char *es)
 		else if (token == '+')
 			cmd = redircmd(cmd, 1, token, q);
 		else if (token == 'h')
-			cmd = redircmd(cmd, fd_heredoc(q), token, q);
+			cmd = redircmd(cmd, 0, token, q);
+			// cmd = redircmd(cmd, fd_heredoc(q), token, q);
 	}
 	return (cmd);
 }
