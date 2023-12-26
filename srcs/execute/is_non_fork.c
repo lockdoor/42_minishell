@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 08:17:52 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/25 14:35:29 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/26 09:02:40 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,7 @@ int	run_build_in_non_fork(t_exec *cmd, t_shell *sh)
 	if (!ft_strncmp(argv[0], "exit", -1))
 		ret = ft_exit(argv, sh);
 	else if (!ft_strncmp(argv[0], "cd", -1))
-	{
-		printf("%s: non_fork Build_in is inconstruction\n", argv[0]);
-		ret = 0;
-	}
+		ret = ft_cd(argv, sh);
 	else if (!ft_strncmp(argv[0], "export", -1))
 		ret = ft_export(argv, sh);
 	else if (!ft_strncmp(argv[0], "unset", -1))

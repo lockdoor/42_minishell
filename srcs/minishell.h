@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 10:33:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/26 08:40:00 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/26 11:15:57 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,8 @@ char	*join_free(char *s1, char *s2);
 char	*get_env(char *name, t_shell *sh);
 int		runcmd_non_fork(t_cmd *cmd, t_shell *sh);
 
+t_env	*find_env(t_list *lst, char *s);
+
 // exec_command.c
 void	ft_execute(char **argvs, t_shell *sh);
 char	*ft_parse_cmd(char	*cmd, t_list *env);
@@ -159,6 +161,7 @@ int	ft_pwd(void);
 int	ft_export(char **argv, t_shell *sh);
 int	set_exports(char **argv, t_shell *sh);
 int set_export(char *argv, t_shell *sh);
+int	ft_cd(char **argv, t_shell *sh);
 
 // free.c
 void	free_cmd(t_cmd *cmd);

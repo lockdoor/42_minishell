@@ -6,34 +6,42 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 10:41:04 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/17 11:26:39 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/26 11:14:51 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* useful for other funtion */
+t_env	*find_env(t_list *lst, char *s)
+{
+	t_env	*env;
+
+	while (lst)
+	{
+		env = (t_env *)lst->content;
+		if (!ft_strncmp(s, env->name, -1))
+			return (env);
+		lst = lst->next;
+	}
+	return (NULL);
+}
+
 static char	**ft_make_path(t_list *lst)
 {
 	t_env	*env;
 	char	**path;
-	if (!lst)
+
+	env = find_env(lst, "PATH");
+	if (!env)
 		return (NULL);
-	while (lst)
+	path = ft_split(env->value, ':');
+	if (!path)
 	{
-		env = (t_env *)lst->content;
-		if (!ft_strncmp(env->name, "PATH", ft_strlen(env->name)))
-		{
-			path = ft_split(env->value, ':');
-			if (!path)
-			{
-				perror("ft_make_path");
-				return (NULL);
-			}
-			return (path);
-		}
-		lst = lst->next;
+		perror("ft_make_path");
+		return (NULL);
 	}
-	return (NULL);
+	return (path);
 }
 
 static void	free_cmd_path(char *cmd, char **path)

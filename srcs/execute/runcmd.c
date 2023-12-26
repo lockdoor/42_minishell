@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:49 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/26 06:47:00 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/26 09:05:59 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,34 @@
 
 int	is_build_in(char *str)
 {
-	size_t	len;
-
 	if (!str)
 		return (0);
 	// len = ft_strlen(str);
-	len = -1;
-	return (!ft_strncmp(str, "echo", len)
-		|| !ft_strncmp(str, "cd", len)
-		|| !ft_strncmp(str, "pwd", len)
-		|| !ft_strncmp(str, "export", len)
-		|| !ft_strncmp(str, "unset", len)
-		|| !ft_strncmp(str, "env", len)
-		|| !ft_strncmp(str, "exit", len));
+	return (!ft_strncmp(str, "echo", -1)
+		|| !ft_strncmp(str, "cd", -1)
+		|| !ft_strncmp(str, "pwd", -1)
+		|| !ft_strncmp(str, "export", -1)
+		|| !ft_strncmp(str, "unset", -1)
+		|| !ft_strncmp(str, "env", -1)
+		|| !ft_strncmp(str, "exit", -1));
 }
 
 int	run_build_in(char **argv, t_shell *sh)
 {
-	size_t	len;
-
-	// len = ft_strlen(argv[0]);
-	len = -1;
-	if (!ft_strncmp(argv[0], "echo", len))
+	if (!ft_strncmp(argv[0], "echo", -1))
 		return (echo(argv));
-	else if (!ft_strncmp(argv[0], "exit", len))
+	else if (!ft_strncmp(argv[0], "exit", -1))
 		return (ft_exit(argv, sh));	
-	else if (!ft_strncmp(argv[0], "env", len))
+	else if (!ft_strncmp(argv[0], "env", -1))
 		return (ft_env(argv, sh));
-	else if (!ft_strncmp(argv[0], "unset", len))
+	else if (!ft_strncmp(argv[0], "unset", -1))
 		return (ft_unset(argv, sh));
-	else if (!ft_strncmp(argv[0], "pwd", len))
+	else if (!ft_strncmp(argv[0], "pwd", -1))
 		return (ft_pwd());
-	else if (!ft_strncmp(argv[0], "export", len))
+	else if (!ft_strncmp(argv[0], "export", -1))
 		return (ft_export(argv, sh));
+	else if (!ft_strncmp(argv[0], "cd", -1))
+		return (ft_cd(argv, sh));
 	else
 		printf("%s: Build_in is inconstruction\n", argv[0]);
 	return (0);
