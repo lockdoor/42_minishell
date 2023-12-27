@@ -6,16 +6,26 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 15:39:13 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/26 07:16:00 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/27 06:28:17 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	free_pipe(t_cmd *cmd)
+{
+	t_pipe	*pipe;
+
+	pipe = (t_pipe *)cmd;
+	free_cmd(pipe->left);
+	free_cmd(pipe->right);
+	free (cmd);
+	cmd = NULL;
+}
+
 void	free_cmd(t_cmd *cmd)
 {
 	t_redir	*redir;
-	t_pipe	*pipe;
 
 	if (!cmd)
 		return ;
@@ -34,13 +44,7 @@ void	free_cmd(t_cmd *cmd)
 		cmd = NULL;
 	}
 	else if (cmd->type == PIPE)
-	{
-		pipe = (t_pipe *)cmd;
-		free_cmd(pipe->left);
-		free_cmd(pipe->right);
-		free (cmd);
-		cmd = NULL;
-	}
+		free_pipe(cmd);
 }
 
 void	free_env(void *data)

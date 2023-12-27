@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:25:48 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/24 11:17:19 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/27 11:24:56 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,31 +34,21 @@ static int	token_symbols(char **ps)
 	return (ret);
 }
 
-/* fix this */
 static int	qoute(char **ps, int q)
 {
 	char	*s;
-	// int		q;
-	// int		ret;
 
-	// ret = 0;
 	s = *ps;
-	// q = *s;
 	s++ ;
 	while (*s && *s != q)
-	{
-		// if (*s == '\'' || *s == '"')
-		// 	ret = qoute(&s);
 		s++ ;
-	}
-	// if (*s != q || ret)
 	if (*s != q)
 		return (1);
 	*ps = s;
 	return (0);
 }
 
-static int token_string(char **ps)
+static int	token_string(char **ps)
 {
 	char	*s;
 
@@ -66,11 +56,13 @@ static int token_string(char **ps)
 	while (*s && !ft_strchr(WHITESPACE, *s) && !ft_strchr(SYMBOLS, *s))
 	{
 		if (*s == '\'' || *s == '"')
+		{
 			if (qoute(&s, *s))
 			{
 				ft_putendl_fd ("not found end qoute", 2);
 				return (-1);
 			}
+		}
 		s++ ;
 	}
 	*ps = s;
@@ -81,19 +73,10 @@ int	peek(char **ps, char *es, char *tok)
 {
 	char	*s;
 
-
-	// (void) es;
-	// if (!*ps || !**ps)
-	// 	return (0);
-	// debug
-	// printf ("peek: tok: %s, %d, %c\n",tok, **ps, **ps);
 	s = *ps;
 	while (s < es && ft_strchr(WHITESPACE, *s))
-	// while (*s && ft_strchr(WHITESPACE, *s))
 		s++ ;
 	*ps = s;
-	// if (!*s)
-	// 	return (0);
 	return (*s && ft_strchr(tok, *s));
 }
 

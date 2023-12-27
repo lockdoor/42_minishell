@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 08:44:49 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/26 14:05:30 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/27 06:38:39 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 	if not found path it print stderr: [path]: No such file or directory
 	then return 1;
 */
-
 int	error_cd_not_set(char *s)
 {
 	ft_putstr_fd("cd: ", 2);
@@ -49,7 +48,7 @@ int	set_old_pwd(t_shell *sh)
 	env = ft_strjoin("OLDPWD=", pwd->value);
 	if (!env)
 		env = "OLDPWD=";
-	else 
+	else
 		m = 1;
 	set_export (env, sh);
 	if (m)
@@ -102,6 +101,5 @@ int	ft_cd(char **argv, t_shell *sh)
 		else
 			return (cd_normal(sh, argv[1]));
 	}
-	
 	return (0);
 }

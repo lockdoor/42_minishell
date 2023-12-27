@@ -6,12 +6,13 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:24:22 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/13 15:26:54 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/27 06:51:40 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* use this for check line */
 int	showtoken(char	*line)
 {
 	char	*ps;
@@ -22,8 +23,10 @@ int	showtoken(char	*line)
 
 	ps = line;
 	es = ft_strchr(ps, 0);
-	while ((type = gettoken(&ps, es, &q, &eq)))
+	type = 1;
+	while (type)
 	{
+		type = gettoken(&ps, es, &q, &eq);
 		if (type == -1)
 			return (-1);
 		write (1, "type: ", 7);

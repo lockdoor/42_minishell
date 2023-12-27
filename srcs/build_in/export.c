@@ -6,13 +6,13 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 10:17:21 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/26 07:33:40 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/27 11:25:11 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void *dup_env(void *data)
+void	*dup_env(void *data)
 {
 	t_env	*env;
 	t_env	*envcpy;
@@ -54,8 +54,8 @@ static int	cmp(void *d_1, void *d_2)
 
 static void	sort_env(t_list *envlst)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	t_env	*env;
 	t_list	*lst;
 
@@ -71,7 +71,7 @@ static void	sort_env(t_list *envlst)
 				env = lst->content;
 				lst->content = lst->next->content;
 				lst->next->content = env;
-			}				
+			}
 			lst = lst->next;
 		}
 	}
@@ -104,7 +104,7 @@ static int	get_export(t_shell *sh)
 int	ft_export(char **argv, t_shell *sh)
 {
 	int		len;
-	
+
 	len = argv_len(argv);
 	if (len == 1)
 		return (get_export(sh));

@@ -19,14 +19,14 @@ get_token.c
 parser.c
     - handle heredoc on parse_redir() [done]
     - parse heredoc before write to pipe, 
-        when found variable parse until non alphanum and underscholl
+        when found variable parse until non alphanum and underscholl [done]
 
 ft_execute.c
-    - handle . command with /bin/bash
+    - handle . command with /bin/bash [done]
 
 build in
     - echo [done]
-    - export
+    - export [done]
         - variable must alphanum and underscholl
             not prefix with number
         - name and value must parse variable before set
@@ -40,6 +40,6 @@ handle signel [done]
 
 handle shell level
 
-handle last command _
+handle last command _ [done]
     - if pipe last command is NULL
     - is_build_in_non_fork

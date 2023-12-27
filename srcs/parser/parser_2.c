@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 15:52:55 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/22 10:11:59 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/27 10:03:18 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,7 @@ t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, char **q)
 
 	new_redir = (t_redir *) malloc (sizeof (t_redir));
 	if (!new_redir || fd < 0)
-	{
-		free_cmd (cmd);
-		perror ("redircmd");
-		return (NULL);
-	}
+		return (token_error(cmd, TOKEN_ERROR));
 	new_redir->fd = fd;
 	new_redir->mode = mode;
 	new_redir->type = REDIR;
@@ -63,7 +59,7 @@ t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, char **q)
 	if (cmd->type == REDIR)
 	{
 		redir = (t_redir *)cmd;
-		while(redir->cmd->type == REDIR)
+		while (redir->cmd->type == REDIR)
 			redir = (t_redir *) redir->cmd;
 		new_redir->cmd = redir->cmd;
 		redir->cmd = (t_cmd *) new_redir;

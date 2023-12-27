@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 10:41:04 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/26 11:14:51 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/27 08:31:19 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*ft_parse_cmd(char	*cmd, t_list *env)
 	char	**path;
 	char	*tmp;
 
-	if (ft_strchr(cmd, '/'))
+	if (ft_strchr(cmd, '/') || !ft_strncmp(cmd, ".", -1))
 		return (ft_strdup (cmd));
 	tmp = ft_strjoin("/", cmd);
 	if (!tmp)
@@ -92,14 +92,10 @@ char	*ft_parse_cmd(char	*cmd, t_list *env)
 		return (NULL);
 	}
 	path = ft_make_path(env);
-	// if (!path)
-	// {
-	// 	free (tmp);
-	// 	return (NULL);
-	// }
 	if (!path || !*path)
 	{
-		return (ft_strdup(cmd));
+		if (access(cmd, F_OK) == 0)
+			return (ft_strdup(cmd));
 	}
 	return (ft_parse_cmd_2(tmp, path));
 }

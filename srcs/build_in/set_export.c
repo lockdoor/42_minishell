@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 07:26:41 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/26 08:29:06 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/27 06:41:49 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static int	export_token_error(char *s)
 static int	found_env(t_list *lst, t_env *env)
 {
 	t_env	*oldenv;
+
 	while (lst)
 	{
 		oldenv = (t_env *) lst->content;
@@ -38,12 +39,12 @@ static int	found_env(t_list *lst, t_env *env)
 	return (FALSE);
 }
 
-int set_export(char *argv, t_shell *sh)
+int	set_export(char *argv, t_shell *sh)
 {
 	char	*parse;
 	t_env	*env;
 	t_list	*new;
-	
+
 	parse = parse_token(argv, sh);
 	if (!parse)
 		return (EXIT_FAILURE);

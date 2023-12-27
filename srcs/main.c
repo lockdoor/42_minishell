@@ -6,12 +6,13 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:26:15 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/26 16:13:23 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/27 10:13:14 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* global variable for get signal status */
 int	g_signal;
 
 int	exec_command(t_cmd *cmd, t_shell *sh)
@@ -36,75 +37,56 @@ void	sigint_handler(int signum)
 		if (signum == SIGINT)
 			ft_putchar_fd('\n', STDOUT_FILENO);
 		rl_on_new_line();
-		/* on m1 cannot use it */
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	else if (g_signal == -1)
 	{
 		if (signum == SIGINT)
-		{
 			ft_putendl_fd("^C", STDOUT_FILENO);
-		}
 		if (signum == SIGQUIT)
-			ft_putendl_fd("^\\Quit: 3", STDOUT_FILENO);	
+			ft_putendl_fd("^\\Quit: 3", STDOUT_FILENO);
 		g_signal = signum;
 	}
 }
 
-int main(void)
+void	main_execute(t_shell *sh)
+{
+	parse_here(sh->cmd, sh);
+	if (is_build_in_non_fork(sh->cmd, sh))
+		sh->exit_code = runcmd_non_fork(sh->cmd, sh);
+	else
+		sh->exit_code = exec_command(sh->cmd, sh);
+	if (g_signal == SIGINT)
+		sh->exit_code = 130;
+	if (g_signal == SIGQUIT)
+		sh->exit_code = 131;
+	set_last_cmd(sh->cmd, sh);
+	free_cmd (sh->cmd);
+}
+
+int	main(void)
 {
 	char	*line;
-	t_shell *sh;
+	t_shell	*sh;
 	int		status;
-
 
 	sh = init_shell();
 	while (!sh->exit)
 	{
-		/* global variable= */
 		g_signal = 0;
-		// dup(0);
-		// dup(1);
 		line = readline("$ ");
-		
 		if (!line)
-			break;
+			break ;
 		add_history(line);
-
 		sh->cmd = parser(line);
 		--g_signal ;
 		if (sh->cmd)
-		{
-			parse_here(sh->cmd, sh);
-			if (is_build_in_non_fork(sh->cmd, sh))
-			{
-				sh->exit_code = runcmd_non_fork(sh->cmd, sh);
-			}
-			else
-			{		
-				sh->exit_code = exec_command(sh->cmd, sh);
-			}
-		
-			if (g_signal == SIGINT)
-				sh->exit_code = 130;
-			if (g_signal == SIGQUIT)
-				sh->exit_code = 131;
-			
-			
-			/* debug */
-			// debug_parser(sh->cmd);
-			set_last_cmd(sh->cmd, sh);
-			free_cmd (sh->cmd);
-		}
-		
-		// printf("env: %s\n", getenv("SHLVL"));
-
+			main_execute(sh);
 		free (line);
 	}
 	ft_lstclear(&sh->env, &free_env);
 	status = sh->exit_code;
 	free (sh);
-	// free (line);
 	return (status);
 }

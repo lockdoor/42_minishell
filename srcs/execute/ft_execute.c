@@ -6,44 +6,66 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 07:11:17 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/22 06:40:13 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/27 08:39:01 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_execute(char **argvs, t_shell *sh)
+void	ft_execute_try(char *cmd)
 {
-	// t_exec	*exec;
-	char	*parse_cmd;
 	char	*argv[3];
 
-	if (!argvs || !argvs[0])
+	argv[0] = "/bin/bash";
+	argv[1] = cmd;
+	argv[2] = NULL;
+	execve ("/bin/bash", argv, NULL);
+}
+
+void	execute_source(char *cmd, char **argv, t_shell *sh)
+{
+	if (!argv[1])
+	{
+		free_split(argv);
+		free_shell(sh);
+		free(cmd);
+		ft_putendl_fd (".: usage: . filename [arguments]", 2);
+		exit(2);
+	}
+	ft_execute_try (argv[1]);
+}
+
+void	execute_error(char *parse_cmd, char **argv, t_shell *sh)
+{
+	perror (parse_cmd);
+	free_split(argv);
+	free (parse_cmd);
+	free_shell (sh);
+	if (errno == EACCES)
+		exit (126);
+	else
+		exit (127);
+}
+
+void	ft_execute(char **argv, t_shell *sh)
+{
+	char	*parse_cmd;
+
+	if (!argv || !argv[0])
 		exit (0);
-	// exec = (t_exec *)cmd;
-	parse_cmd = ft_parse_cmd(*argvs, sh->env);
+	parse_cmd = ft_parse_cmd(*argv, sh->env);
 	if (!parse_cmd)
 	{
-		free_split(argvs);
+		free_split(argv);
 		free_shell(sh);
 		exit (127);
 	}
-	if (execve(parse_cmd, argvs, NULL))
+	if (!ft_strncmp(parse_cmd, ".", -1))
+		execute_source(parse_cmd, argv, sh);
+	if (execve(parse_cmd, argv, NULL))
 	{
 		if (errno == ENOEXEC)
-		{
-			argv[0] = "/bin/bash";
-			argv[1] = *argv;
-			argv[2] = NULL;
-			execve ("/bin/bash", argv, NULL);
-		}
-		perror (parse_cmd);
-		free_split(argvs);
-		free (parse_cmd);
-		free_shell (sh);
-		if (errno == EACCES)
-			exit (126);
-		else
-			exit (127);
+			ft_execute_try(parse_cmd);
+		execute_error(parse_cmd, argv, sh);
 	}
 }

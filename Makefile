@@ -6,7 +6,7 @@
 #    By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/24 15:48:31 by pnamnil           #+#    #+#              #
-#    Updated: 2023/12/26 16:12:42 by pnamnil          ###   ########.fr        #
+#    Updated: 2023/12/27 11:33:31 by pnamnil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,11 +33,11 @@ CFLAGS = -Wall -Werror -Wextra
 
 SRCS = main.c \
 		init_shell.c \
-		debug/debug.c \
 		free.c \
 		ft_get_env.c \
 		set_last_cmd.c \
-		debug/debug_parser_2.c \
+		debug/debug.c \
+		debug/debug_parser.c \
 		parser/gettoken.c \
 		parser/parser_1.c \
 		parser/parser_2.c \
@@ -93,5 +93,11 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
+
+norminette:
+	@norminette -R CheckForbiddenSourceHeader $(LIB_PATH)/*.c
+	@norminette -R CheckDefine $(LIB_PATH)/includes/libft.h
+	@norminette -R CheckForbiddenSourceHeader $(SRC_DIR)/*
+	@norminette -R CheckDefine $(SRC_DIR)/minishell.h
 
 re: fclean all

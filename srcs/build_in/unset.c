@@ -6,13 +6,13 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 08:48:44 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/25 15:29:42 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/27 06:42:15 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list *rm_node(t_list *lst, char *argv)
+t_list	*rm_node(t_list *lst, char *argv)
 {
 	t_env	*env;
 	t_list	*next;

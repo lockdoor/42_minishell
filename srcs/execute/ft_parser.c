@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:26:55 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/25 08:43:31 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/27 09:19:36 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,6 @@ char	*parse_token(char *s, t_shell *sh)
 			return (NULL);
 		}
 		result = join_free(result, t);
-		
-		// debug
-		// printf ("parse_token: %s\n", result);
 	}
 	return (result);
 }
@@ -88,17 +85,14 @@ char	*join_free(char *s1, char *s2)
 
 char	*get_env(char *name, t_shell *sh)
 {
-	size_t	len;
 	t_env	*env;
 	t_list	*lstenv;
 
 	lstenv = sh->env;
-	// len = ft_strlen(name);
-	len = -1;
 	while (lstenv)
 	{
 		env = (t_env *) lstenv->content;
-		if (ft_strncmp(name, env->name, len) == 0)
+		if (ft_strncmp(name, env->name, -1) == 0)
 			break ;
 		lstenv = lstenv->next;
 	}
@@ -106,21 +100,5 @@ char	*get_env(char *name, t_shell *sh)
 	if (!lstenv)
 		return (ft_strdup(""));
 	env = (t_env *) lstenv->content;
-	// debug
-	// printf ("get_env: %s=%s\n", env->name, env->value);
 	return (ft_strdup(env->value));
-}
-
-char	*get_word(char **str, t_shell *sh)
-{
-	char	*s;
-	char	*word;
-
-	(void) sh;
-	s = *str;
-	while (*s != '\0' && *s != '$' && *s != '\'' && *s != '"')
-		s++ ;
-	word = ft_substr(*str, 0, s - *str);
-	*str = s;
-	return (word);
 }

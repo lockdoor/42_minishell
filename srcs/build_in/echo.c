@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 06:42:42 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/25 15:50:53 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/27 06:39:58 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ int	echo(char **argv)
 		i++;
 		newline = 0;
 	}
-	while(argv[i])
+	while (argv[i])
 	{
 		printf("%s", argv[i]);
 		if (argv[i + 1] != NULL)
 			printf(" ");
-		i++ ;	
+		i++ ;
 	}
 	if (newline)
 		printf ("\n");

@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 15:22:02 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/26 08:34:50 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/27 09:33:45 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	build_in_list(char *cmd)
 		|| !ft_strncmp(cmd, "unset", -1));
 }
 
-/* this point can handle last command */
 int	is_build_in_non_fork(t_cmd *cmd, t_shell *sh)
 {
 	t_redir	*redir;
@@ -35,7 +34,7 @@ int	is_build_in_non_fork(t_cmd *cmd, t_shell *sh)
 	if (cmd->type == REDIR)
 	{
 		redir = (t_redir *)cmd;
-		return (is_build_in_non_fork(redir->cmd, sh));	
+		return (is_build_in_non_fork(redir->cmd, sh));
 	}
 	else if (cmd->type == EXEC)
 	{

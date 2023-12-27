@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 11:32:05 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/24 16:45:06 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/27 06:40:46 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	is_nondigit(char *s)
 
 int	ft_exit(char **argv, t_shell *sh)
 {
-	int status;
+	int	status;
 
 	status = 0;
 	ft_putendl_fd("exit", 2);

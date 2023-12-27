@@ -6,13 +6,13 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 13:44:47 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/23 11:17:46 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/27 09:23:08 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		fork_1(char	*s, t_shell *sh)
+int	fork_1(char	*s, t_shell *sh)
 {
 	int	id;
 
@@ -23,7 +23,7 @@ int		fork_1(char	*s, t_shell *sh)
 		free_shell(sh);
 		exit(EXIT_FAILURE);
 	}
-	return(id);
+	return (id);
 }
 
 static void	fork_left(t_cmd *cmd, int *p, t_shell *sh)
@@ -58,26 +58,13 @@ void	run_pipe(t_cmd *cmd, t_shell *sh)
 	}
 	id[0] = fork_1("run_pipe", sh);
 	if (id[0] == 0)
-	{
-		/* global variable= */
-		// ++g_process ;
-		
 		fork_left(exec_pipe->left, p, sh);
-	}
 	id[1] = fork_1("run_pipe", sh);
 	if (id[1] == 0)
-	{
-		/* global variable= */
-		// ++g_process ;
-		
 		fork_rigth(exec_pipe->right, p, sh);
-	}
 	close (p[0]);
 	close (p[1]);
 	waitpid(id[0], NULL, 0);
 	waitpid(id[1], &status, 0);
-	// debug
-	// printf ("runpipe: status: %d\n", WEXITSTATUS(status));
-	// exit (status);
 	exit (WEXITSTATUS(status));
 }

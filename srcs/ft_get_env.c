@@ -6,13 +6,20 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:02:45 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/26 07:19:23 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/27 11:23:38 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static t_env	*ft_set_env_2(char *s, t_env *env);
+
+static void	get_env_error(t_env *env, t_list **lst)
+{
+	free_env(env);
+	ft_lstclear(lst, &free_env);
+	perror ("ft_get_env");
+}
 
 t_list	*ft_get_env(void)
 {
@@ -29,15 +36,13 @@ t_list	*ft_get_env(void)
 		if (!env)
 		{
 			ft_lstclear(&lst, &free_env);
-			break;
+			break ;
 		}
 		env->env = TRUE;
 		new = ft_lstnew(env);
 		if (!new)
 		{
-			free_env(env);
-			ft_lstclear(&lst, &free_env);
-			perror ("ft_get_env");
+			get_env_error(env, &lst);
 			break ;
 		}
 		ft_lstadd_back(&lst, new);
@@ -59,7 +64,7 @@ t_env	*ft_set_env(char *s)
 }
 
 static t_env	*ft_set_env_2(char *s, t_env *env)
-{	
+{
 	int	i;
 
 	i = 0;

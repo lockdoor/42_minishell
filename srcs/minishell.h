@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 10:33:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/26 15:52:58 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/27 10:09:09 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,16 @@
 
 extern char	**environ;
 
-/* global variable for specify parent or child */
-// int	g_process;
-// int	g_signal;
-
 typedef struct s_env
 {
-    char    	*name;
-    char    	*value;
+	char		*name;
+	char		*value;
 	u_int8_t	env;
-}   t_env;
+}	t_env;
 
 typedef struct s_cmd
 {
-	int type;
+	int	type;
 }	t_cmd;
 
 typedef struct s_exec
@@ -63,14 +59,16 @@ typedef struct s_exec
 	char	*eargv[MAXARGS];
 }	t_exec;
 
+// int		mode; // '<', '>', '+', 'h'
+// int		fd; //for heredoc
 typedef struct s_redir
 {
-    int		type;
+	int		type;
 	t_cmd	*cmd;
 	char	*file;
 	char	*efile;
-	int		mode; // '<', '>', '+', 'h'
-	int		fd; //for heredoc
+	int		mode;
+	int		fd;
 }	t_redir;
 
 typedef struct s_pipe
@@ -98,39 +96,27 @@ t_shell	*init_shell(void);
 t_list	*ft_get_env(void);
 t_env	*ft_set_env(char *s);
 
-
 // debug.c
 int		showtoken(char	*line);
 void	parsecmd(char *s);
 void	debug_parser(t_cmd *cmd);
 
 // gettoken.c
-int	gettoken(char **ps, char *es, char **q, char **eq);
-int	peek(char **ps, char *es, char *tok);
+int		gettoken(char **ps, char *es, char **q, char **eq);
+int		peek(char **ps, char *es, char *tok);
 
 // parser.c
 t_cmd	*parser(char *ps);
 t_cmd	*parse_exec(char **ps, char *es);
 t_cmd	*token_error(t_cmd *cmd, char *s);
 void	null_terminate(t_cmd *cmd);
-
 t_cmd	*pipecmd(void);
 t_cmd	*execmd(void);
 t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, char **q);
-
-// t_cmd	*is_non_fork(char *line);
-int	is_build_in_non_fork(t_cmd *cmd, t_shell *sh);
-
-// t_cmd	*redircmd_heredoc(t_cmd *cmd, int mode, char **q);
-// int		fd_heredoc(char **q);
+int		is_build_in_non_fork(t_cmd *cmd, t_shell *sh);
 void	parse_here(t_cmd *cmd, t_shell *sh);
 
-// runcmd.c
-void	runcmd(t_cmd *cmd, t_shell *sh);
-void	run_pipe(t_cmd *cmd, t_shell *sh);
-int		fork_1(char	*s, t_shell *sh);
-void	run_redir(t_cmd *cmd, t_shell *sh);
-int		is_build_in(char *str);
+// parse token a
 char	**ft_parser(char **argv, t_shell *sh);
 char	*parse_qoute(char **str, t_shell *sh);
 char	*parse_var(char **str, t_shell *sh);
@@ -139,8 +125,14 @@ char	*get_word(char **str, t_shell *sh);
 char	*parse_token(char *s, t_shell *sh);
 char	*join_free(char *s1, char *s2);
 char	*get_env(char *name, t_shell *sh);
-int		runcmd_non_fork(t_cmd *cmd, t_shell *sh);
 
+// runcmd.c
+void	runcmd(t_cmd *cmd, t_shell *sh);
+void	run_pipe(t_cmd *cmd, t_shell *sh);
+int		fork_1(char	*s, t_shell *sh);
+void	run_redir(t_cmd *cmd, t_shell *sh);
+int		is_build_in(char *str);
+int		runcmd_non_fork(t_cmd *cmd, t_shell *sh);
 t_env	*find_env(t_list *lst, char *s);
 
 // exec_command.c
@@ -148,21 +140,21 @@ void	ft_execute(char **argvs, t_shell *sh);
 char	*ft_parse_cmd(char	*cmd, t_list *env);
 
 //set_last_cmd.c
-void set_last_cmd(t_cmd *cmd, t_shell *sh);
+void	set_last_cmd(t_cmd *cmd, t_shell *sh);
 
 // exec/utils.c
-int	argv_len(char **argv);
+int		argv_len(char **argv);
 
 // build_in
-int	echo(char **argv);
-int	ft_exit(char **argv, t_shell *sh);
-int	ft_env(char **argv, t_shell *sh);
-int	ft_unset(char **argv, t_shell *sh);
-int	ft_pwd(void);
-int	ft_export(char **argv, t_shell *sh);
-int	set_exports(char **argv, t_shell *sh);
-int set_export(char *argv, t_shell *sh);
-int	ft_cd(char **argv, t_shell *sh);
+int		echo(char **argv);
+int		ft_exit(char **argv, t_shell *sh);
+int		ft_env(char **argv, t_shell *sh);
+int		ft_unset(char **argv, t_shell *sh);
+int		ft_pwd(void);
+int		ft_export(char **argv, t_shell *sh);
+int		set_exports(char **argv, t_shell *sh);
+int		set_export(char *argv, t_shell *sh);
+int		ft_cd(char **argv, t_shell *sh);
 
 // free.c
 void	free_cmd(t_cmd *cmd);

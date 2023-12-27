@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 15:10:26 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/26 16:40:01 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/27 09:46:23 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*white_space(char **str, t_shell *sh)
 	char	*s;
 	char	*space;
 
-	(void)	sh;
+	(void) sh;
 	s = *str;
 	while (*s && ft_strchr(WHITESPACE, *s))
 		s++ ;
@@ -26,6 +26,12 @@ char	*white_space(char **str, t_shell *sh)
 	if (!space)
 		return (NULL);
 	return (space);
+}
+
+char	*parse_heredoc_error(char *result)
+{
+	free (result);
+	return (NULL);
 }
 
 char	*parse_heredoc_2(char *s, t_shell *sh)
@@ -49,14 +55,8 @@ char	*parse_heredoc_2(char *s, t_shell *sh)
 			func = &get_word;
 		t = func(&s, sh);
 		if (!t)
-		{
-			free (result);
-			return (NULL);
-		}
+			return (parse_heredoc_error (result));
 		result = join_free(result, t);
-		
-		// debug
-		// printf ("parse_token: %s\n", result);
 	}
 	return (result);
 }
@@ -77,7 +77,6 @@ int	parse_heredoc(char *limiter, t_shell *sh)
 		line = readline("> ");
 		if (!line || !ft_strncmp(line, limiter, ft_strlen(line)))
 			break ;
-		/* should parse before write */
 		parse = parse_heredoc_2(line, sh);
 		ft_putendl_fd(parse, p[1]);
 		free (line);
@@ -94,9 +93,9 @@ void	parse_here(t_cmd *cmd, t_shell *sh)
 	t_redir	*r;
 
 	if (!cmd)
-		return;
+		return ;
 	if (cmd->type == EXEC)
-		return;
+		return ;
 	if (cmd->type == PIPE)
 	{
 		p = (t_pipe *)cmd;

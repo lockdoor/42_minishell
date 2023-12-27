@@ -6,13 +6,13 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:25:48 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/20 10:58:32 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/27 09:37:39 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void null_exec(t_cmd *cmd)
+static void	null_exec(t_cmd *cmd)
 {
 	t_exec	*exec;
 	int		i;
@@ -26,18 +26,12 @@ static void null_exec(t_cmd *cmd)
 	}
 }
 
-static void null_redir(t_cmd *cmd)
+static void	null_redir(t_cmd *cmd)
 {
-	t_redir *redir;
+	t_redir	*redir;
 
-
-	
 	redir = (t_redir *)cmd;
 	*redir->efile = 0;
-	
-	//debug
-	// printf("null_terminate: %s\n", redir->file);
-	
 	null_terminate(redir->cmd);
 }
 
@@ -53,11 +47,11 @@ static void	null_pipe(t_cmd *cmd)
 void	null_terminate(t_cmd *cmd)
 {
 	if (!cmd)
-		return;
+		return ;
 	if (cmd->type == EXEC)
 		null_exec(cmd);
-	if (cmd->type == REDIR)
+	else if (cmd->type == REDIR)
 		null_redir(cmd);
-	if (cmd->type == PIPE)
-		null_pipe(cmd);  
+	else if (cmd->type == PIPE)
+		null_pipe(cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 10:08:51 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/25 08:44:11 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/27 09:19:14 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,54 +43,76 @@ char	*parse_var(char **str, t_shell *sh)
 		return (ft_itoa(sh->exit_code));
 	}
 	var = ft_substr(*str, 1, s - *str - 1);
-
-	// debug
-	// printf ("parse_var: %s\n", var);
-	
 	*str = s;
 	if (!var)
 		return (NULL);
 	return (get_env(var, sh));
 }
 
-char	*parse_db_qoute(char **str, t_shell *sh)
+static char	*parse_var_in_db_qoute(char *result, \
+	t_shell *sh, char *start, char **str)
+{
+	char	*t;
+	char	*s;
+
+	s = *str;
+	t = ft_substr(start, 0, s - start);
+	if (!t)
+	{
+		free (result);
+		return (NULL);
+	}
+	result = join_free (result, t);
+	t = parse_var(&s, sh);
+	if (!t)
+	{
+		free (result);
+		return (NULL);
+	}
+	result = join_free (result, t);
+	*str = s;
+	return (result);
+}
+
+char	*parse_db_qoute(char **start, t_shell *sh)
 {
 	char	*result;
 	char	*s;
 	char	*t;
 
-	s = *str;
+	s = *start;
 	result = ft_strdup("");
-	*str = ++s;
+	*start = ++s;
 	while (*s && *s != '"' && result)
 	{
 		if (*s == '$')
 		{
-			t = ft_substr(*str, 0, s - *str);
-			if (!t)
-			{
-				free (result);
-				return (NULL);
-			}
-			result = join_free (result, t);
-			t = parse_var(&s, sh);
-			if (!t)
-			{
-				free (result);
-				return (NULL);
-			}
-			result = join_free (result, t);
-			*str = ++s;
+			result = parse_var_in_db_qoute(result, sh, *start, &s);
+			*start = s;
 		}
 		s++ ;
 	}
-	t = ft_substr(*str, 0, s - *str);
+	t = ft_substr(*start, 0, s - *start);
 	if (!t)
 	{
 		free (result);
 		return (NULL);
 	}
 	result = join_free(result, t);
-	*str = ++s;
+	*start = ++s;
 	return (result);
+}
+
+char	*get_word(char **str, t_shell *sh)
+{
+	char	*s;
+	char	*word;
+
+	(void) sh;
+	s = *str;
+	while (*s != '\0' && *s != '$' && *s != '\'' && *s != '"')
+		s++ ;
+	word = ft_substr(*str, 0, s - *str);
+	*str = s;
+	return (word);
 }

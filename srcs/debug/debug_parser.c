@@ -5,97 +5,45 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/14 09:10:45 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/14 10:38:52 by pnamnil          ###   ########.fr       */
+/*   Created: 2023/12/15 06:14:42 by pnamnil           #+#    #+#             */
+/*   Updated: 2023/12/27 06:50:01 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parse_pipe(char **ps, char *s);
-void	parse_exec(char **ps, char *s);
-void	parse_redir(char **ps, char *s);
-
-void	panic(char *s)
+static void	debug_parser_pipe(t_cmd *cmd)
 {
-	write (2, s, ft_strlen(s));
-	exit (1);
+	t_pipe	*pipe;
+
+	pipe = (t_pipe *)cmd;
+	printf ("Found PIPE\n");
+	debug_parser (pipe->left);
+	debug_parser (pipe->right);
 }
 
-void	print_token(char *q, char *eq)
+/* use this for debug command tree node */
+void	debug_parser(t_cmd *cmd)
 {
-	write (1, "[", 1);
-	if (eq)
-		write (1, q, eq - q);
-	else
-		write (1, q, ft_strlen(q));
-	write (1, "]", 1);
-}
+	t_exec	*exec;
+	t_redir	*redir;
+	int		i;
 
-void	parsecmd(char *s)
-{
-	char	*es;
-
-	es = ft_strchr(s, 0);
-	parse_pipe(&s, es);
-	write (1, "\n", 1);
-}
-
-void	parse_pipe(char **ps, char *es)
-{
-	parse_exec(ps, es);
-	if (peek(ps, es, "|"))
+	if (cmd->type == EXEC)
 	{
-		print_token ("|", NULL);
-		gettoken (ps, es, NULL, NULL);
-		parse_pipe(ps, es);
+		i = 0;
+		exec = (t_exec *)cmd;
+		printf ("Command: ");
+		while (exec->argv[i])
+			printf ("%s ", exec->argv[i++]);
+		printf ("\n");
 	}
-}
-
-void	parse_exec(char **ps, char *es)
-{
-	char	*q;
-	char	*eq;
-	int		token;
-
-	parse_redir(ps, es);
-	write (1, "[", 1);
-	while (peek(ps, es, SYMBOLS) == 0)
+	if (cmd->type == REDIR)
 	{
-		token = gettoken(ps, es, &q, &eq);
-		if (token == 0)
-			break ;
-		if (token != 'a')
-			panic ("error no command");
-		else
-			print_token(q, eq);
+		redir = (t_redir *)cmd;
+		printf ("Redirect: %s, FD: %d\n", redir->file, redir->fd);
+		debug_parser (redir->cmd);
 	}
-	write (1, "]", 1);
-}
-
-void	parse_redir(char **ps, char *es)
-{
-	char	*q;
-	char	*eq;
-	int		token;
-	if (peek(ps, es, "<>"))
-	{
-		write (1, "[", 1);
-		token = gettoken(ps, es, NULL, NULL);
-		if (token == '<')
-			print_token ("<", NULL);
-		else if (token == '>')
-			print_token (">", NULL);
-		else if (token == '+')
-			print_token (">>", NULL);
-		else
-			print_token ("<<", NULL);
-		token = gettoken(ps, es, &q, &eq);
-		if (token != 'a')
-			panic ("error no file");
-		else
-			print_token (q, eq);
-		write (1, "]", 1);
-		parse_redir (ps, es);
-	}
+	if (cmd->type == PIPE)
+		debug_parser_pipe(cmd);
 }
