@@ -6,20 +6,20 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 07:11:17 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/27 08:39:01 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/28 08:16:28 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_execute_try(char *cmd)
+void	ft_execute_try(char *cmd, char **env)
 {
 	char	*argv[3];
 
 	argv[0] = "/bin/bash";
 	argv[1] = cmd;
 	argv[2] = NULL;
-	execve ("/bin/bash", argv, NULL);
+	execve ("/bin/bash", argv, env);
 }
 
 void	execute_source(char *cmd, char **argv, t_shell *sh)
@@ -27,18 +27,22 @@ void	execute_source(char *cmd, char **argv, t_shell *sh)
 	if (!argv[1])
 	{
 		free_split(argv);
+		if (sh->char_env)
+			free_split(sh->char_env);
 		free_shell(sh);
 		free(cmd);
 		ft_putendl_fd (".: usage: . filename [arguments]", 2);
 		exit(2);
 	}
-	ft_execute_try (argv[1]);
+	ft_execute_try (argv[1], sh->char_env);
 }
 
 void	execute_error(char *parse_cmd, char **argv, t_shell *sh)
 {
 	perror (parse_cmd);
 	free_split(argv);
+	if (sh->char_env)
+		free_split(sh->char_env);
 	free (parse_cmd);
 	free_shell (sh);
 	if (errno == EACCES)
@@ -60,12 +64,13 @@ void	ft_execute(char **argv, t_shell *sh)
 		free_shell(sh);
 		exit (127);
 	}
+	sh->char_env = make_char_env(sh->env);
 	if (!ft_strncmp(parse_cmd, ".", -1))
 		execute_source(parse_cmd, argv, sh);
-	if (execve(parse_cmd, argv, NULL))
+	if (execve(parse_cmd, argv, sh->char_env))
 	{
 		if (errno == ENOEXEC)
-			ft_execute_try(parse_cmd);
+			ft_execute_try(parse_cmd, sh->char_env);
 		execute_error(parse_cmd, argv, sh);
 	}
 }

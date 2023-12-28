@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:02:45 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/27 11:23:38 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/28 07:46:49 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	get_env_error(t_env *env, t_list **lst)
 	perror ("ft_get_env");
 }
 
-t_list	*ft_get_env(void)
+t_list	*ft_get_env(char **environment)
 {
 	t_list	*lst;
 	t_list	*new;
@@ -30,15 +30,14 @@ t_list	*ft_get_env(void)
 
 	i = -1;
 	lst = NULL;
-	while (environ[++i])
+	while (environment[++i])
 	{
-		env = ft_set_env(environ[i]);
+		env = ft_set_env(environment[i]);
 		if (!env)
 		{
 			ft_lstclear(&lst, &free_env);
 			break ;
 		}
-		env->env = TRUE;
 		new = ft_lstnew(env);
 		if (!new)
 		{

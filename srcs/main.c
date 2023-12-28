@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:26:15 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/27 10:13:14 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/28 08:34:04 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,15 @@ void	main_execute(t_shell *sh)
 	free_cmd (sh->cmd);
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **env)
 {
 	char	*line;
 	t_shell	*sh;
 	int		status;
 
-	sh = init_shell();
+	if (argc > 1)
+		ft_execute_try(argv[1], env);
+	sh = init_shell(env);
 	while (!sh->exit)
 	{
 		g_signal = 0;

@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:43:03 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/27 06:35:34 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/28 09:11:25 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,27 @@ static int	minishell_terminal(void)
 	return (0);
 }
 
-t_shell	*init_shell(void)
+static void	set_shell_level(t_shell *sh)
+{
+	t_env	*env;
+	int		level;
+	char	*s;
+
+	env = find_env(sh->env, "SHLVL");
+	if (!env)
+		return ;
+	if (!env->value)
+		return ;
+	level = ft_atoi(env->value);
+	level += 1;
+	s = ft_itoa(level);
+	if (!s)
+		return ;
+	free (env->value);
+	env->value = s;
+}
+
+t_shell	*init_shell(char **env)
 {
 	t_shell	*sh;
 
@@ -58,7 +78,8 @@ t_shell	*init_shell(void)
 		exit (EXIT_FAILURE);
 	}
 	ft_memset(sh, 0, sizeof(t_shell));
-	sh->env = ft_get_env();
+	sh->env = ft_get_env(env);
+	set_shell_level(sh);
 	if (!sh->env)
 	{
 		free (sh);

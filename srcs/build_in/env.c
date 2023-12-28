@@ -6,12 +6,13 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 06:24:27 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/25 08:30:15 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/28 07:24:28 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* only print variable with value */
 int	ft_env(char **argv, t_shell *sh)
 {
 	t_list	*envlst;
@@ -26,7 +27,7 @@ int	ft_env(char **argv, t_shell *sh)
 	while (envlst)
 	{
 		env = (t_env *) envlst->content;
-		if (env->env)
+		if (env->value)
 			printf ("%s=%s\n", env->name, env->value);
 		envlst = envlst->next;
 	}

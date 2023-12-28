@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 10:33:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/27 10:09:09 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/28 08:33:14 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,12 @@
 # define COMMAND_NOT_FOUND "command not found"
 # define TOKEN_ERROR "token error"
 
-extern char	**environ;
+// extern char	**environ;
 
 typedef struct s_env
 {
 	char		*name;
 	char		*value;
-	u_int8_t	env;
 }	t_env;
 
 typedef struct s_cmd
@@ -84,16 +83,17 @@ typedef struct s_shell
 	t_list		*env;
 	u_int8_t	exit_code;
 	u_int8_t	exit;
+	char		**char_env;
 }	t_shell;
 
 // main.c
 void	sigint_handler(int signum);
 
 // init_shell.c
-t_shell	*init_shell(void);
+t_shell	*init_shell(char **env);
 
 // ft_get_env.c
-t_list	*ft_get_env(void);
+t_list	*ft_get_env(char **environment);
 t_env	*ft_set_env(char *s);
 
 // debug.c
@@ -134,10 +134,12 @@ void	run_redir(t_cmd *cmd, t_shell *sh);
 int		is_build_in(char *str);
 int		runcmd_non_fork(t_cmd *cmd, t_shell *sh);
 t_env	*find_env(t_list *lst, char *s);
+char	**make_char_env(t_list *lst);
 
 // exec_command.c
 void	ft_execute(char **argvs, t_shell *sh);
 char	*ft_parse_cmd(char	*cmd, t_list *env);
+void	ft_execute_try(char *cmd, char **env);
 
 //set_last_cmd.c
 void	set_last_cmd(t_cmd *cmd, t_shell *sh);

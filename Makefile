@@ -6,7 +6,7 @@
 #    By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/24 15:48:31 by pnamnil           #+#    #+#              #
-#    Updated: 2023/12/27 11:33:31 by pnamnil          ###   ########.fr        #
+#    Updated: 2023/12/28 08:00:02 by pnamnil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ SRCS = main.c \
 		execute/ft_parse_var.c \
 		execute/is_non_fork.c \
 		execute/utils.c \
+		execute/make_env.c \
 		build_in/echo.c \
 		build_in/exit.c \
 		build_in/env.c \
