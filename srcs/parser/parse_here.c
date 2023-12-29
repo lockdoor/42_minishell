@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 15:10:26 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/29 08:12:06 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/29 08:32:22 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@ static void	write_heredoc(char *s, t_shell *sh, int fd)
 		if (*s == '$')
 		{
 			parse = parse_var(&s, sh);
-			if (parse && *parse)
+			if (parse)
 			{
-				write (fd, parse, sizeof (parse));
+				if (*parse)
+					write (fd, parse, sizeof (parse));
 				free (parse);
 			}
 		}
