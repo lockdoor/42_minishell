@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 08:08:40 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/27 11:24:01 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/29 12:45:05 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,22 +76,22 @@ t_cmd	*parse_exec_2(t_exec *exec, t_cmd *ret, char **ps, char *es)
 {
 	int		token;
 	int		argv;
-	char	*q;
-	char	*eq;
+	char	*q[2];
 
 	argv = 0;
 	while (**ps && peek(ps, es, "|") == 0)
 	{
-		token = gettoken(ps, es, &q, &eq);
+		if (argv > MAXARGS - 2)
+			return (token_error(ret, "MAXIMUM ARGUMENT"));
+		token = gettoken(ps, es, &q[0], &q[1]);
 		if (token == 0)
 			break ;
 		if (token == -1)
 			return (token_error(ret, NULL));
 		if (token != 'a')
 			return (token_error(ret, COMMAND_NOT_FOUND));
-		exec->argv[argv] = q;
-		exec->eargv[argv] = eq;
-		argv++ ;
+		exec->argv[argv] = q[0];
+		exec->eargv[argv++] = q[1];
 		ret = parse_redir(ret, ps, es);
 		if (!ret)
 			return (NULL);

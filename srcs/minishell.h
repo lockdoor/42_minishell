@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 10:33:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/28 08:33:14 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/29 11:14:11 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,14 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <termios.h>
+# include <limits.h>
 
 # define SYMBOLS "|<>"
 # define WHITESPACE " \n\t\v\r"
 # define EXEC  1
 # define REDIR 2
 # define PIPE  3
-# define MAXARGS 10
+# define MAXARGS 20
 
 # define TRUE 1
 # define FALSE 0
