@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 10:17:21 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/27 11:25:11 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/28 11:55:40 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	ft_export(char **argv, t_shell *sh)
 	len = argv_len(argv);
 	if (len == 1)
 		return (get_export(sh));
-	if (len > 1)
+	else if (len > 1)
 		return (set_exports(argv, sh));
 	return (0);
 }

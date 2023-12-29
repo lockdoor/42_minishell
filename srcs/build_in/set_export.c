@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 07:26:41 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/27 06:41:49 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/29 08:06:03 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,20 @@ static int	found_env(t_list *lst, t_env *env)
 	return (FALSE);
 }
 
+static int	check_variable_name(char *s)
+{
+	if (!ft_isalpha(*s) && *s != '_')
+		return (FALSE);
+	while (*s && *s != '=')
+	{
+		if (ft_isalnum(*s) || *s == '_')
+			s++ ;
+		else
+			return (FALSE);
+	}
+	return (*s == 0 || *s == '=');
+}
+
 int	set_export(char *argv, t_shell *sh)
 {
 	char	*parse;
@@ -48,7 +62,7 @@ int	set_export(char *argv, t_shell *sh)
 	parse = parse_token(argv, sh);
 	if (!parse)
 		return (EXIT_FAILURE);
-	if (!ft_isalpha(*parse) && *parse != '_')
+	if (!check_variable_name(parse))
 		return (export_token_error(parse));
 	env = ft_set_env(parse);
 	free (parse);

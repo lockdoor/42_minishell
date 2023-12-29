@@ -6,66 +6,36 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 15:10:26 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/27 09:46:23 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/29 08:12:06 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*white_space(char **str, t_shell *sh)
+static void	write_heredoc(char *s, t_shell *sh, int fd)
 {
-	char	*s;
-	char	*space;
+	char	*parse;
 
-	(void) sh;
-	s = *str;
-	while (*s && ft_strchr(WHITESPACE, *s))
-		s++ ;
-	space = ft_substr(*str, 0, s - *str);
-	*str = s;
-	if (!space)
-		return (NULL);
-	return (space);
-}
-
-char	*parse_heredoc_error(char *result)
-{
-	free (result);
-	return (NULL);
-}
-
-char	*parse_heredoc_2(char *s, t_shell *sh)
-{
-	char	*result;
-	char	*t;
-	char	*(*func)(char **, t_shell *);
-
-	result = ft_strdup("");
-	while (*s && result)
+	while (*s)
 	{
-		if (ft_strchr(WHITESPACE, *s))
-			func = &white_space;
-		else if (*s == '$')
-			func = &parse_var;
-		else if (*s == '\'')
-			func = &parse_qoute;
-		else if (*s == '"')
-			func = &parse_db_qoute;
+		if (*s == '$')
+		{
+			parse = parse_var(&s, sh);
+			if (parse && *parse)
+			{
+				write (fd, parse, sizeof (parse));
+				free (parse);
+			}
+		}
 		else
-			func = &get_word;
-		t = func(&s, sh);
-		if (!t)
-			return (parse_heredoc_error (result));
-		result = join_free(result, t);
+			write (fd, s++, 1);
 	}
-	return (result);
 }
 
 int	parse_heredoc(char *limiter, t_shell *sh)
 {
 	int		p[2];
 	char	*line;
-	char	*parse;
 
 	if (pipe(p))
 	{
@@ -77,10 +47,9 @@ int	parse_heredoc(char *limiter, t_shell *sh)
 		line = readline("> ");
 		if (!line || !ft_strncmp(line, limiter, ft_strlen(line)))
 			break ;
-		parse = parse_heredoc_2(line, sh);
-		ft_putendl_fd(parse, p[1]);
+		write_heredoc(line, sh, p[1]);
+		ft_putchar_fd('\n', p[1]);
 		free (line);
-		free (parse);
 	}
 	free (line);
 	close (p[1]);

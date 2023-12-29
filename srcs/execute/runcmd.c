@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 10:09:49 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/27 09:29:53 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/29 08:11:12 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,16 @@ int	run_build_in(char **argv, t_shell *sh)
 		return (ft_cd(argv, sh));
 	return (0);
 }
+
+// debug
+// void	print_split(char **str)
+// {
+// 	int i;
+
+// 	i = -1;
+// 	while (str[++i])
+// 		printf ("%s\n", str[i]);
+// }
 
 void	run_exec(t_cmd *cmd, t_shell *sh)
 {

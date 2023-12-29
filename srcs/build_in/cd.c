@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 08:44:49 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/27 06:38:39 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/29 07:54:35 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	cd_special(t_shell *sh, char *s)
 		return (error_cd_not_set(s));
 	if (chdir(env->value))
 	{
-		perror("cd:");
+		perror("cd");
 		return (EXIT_FAILURE);
 	}
 	set_old_pwd(sh);
@@ -80,7 +80,7 @@ int	cd_normal(t_shell *sh, char *s)
 {
 	if (chdir(s))
 	{
-		perror("cd:");
+		perror("cd");
 		return (EXIT_FAILURE);
 	}
 	set_old_pwd(sh);

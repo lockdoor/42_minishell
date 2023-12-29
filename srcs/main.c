@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:26:15 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/28 08:34:04 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/28 15:56:34 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	sigint_handler(int signum)
 void	main_execute(t_shell *sh)
 {
 	parse_here(sh->cmd, sh);
+	--g_signal ;
 	if (is_build_in_non_fork(sh->cmd, sh))
 		sh->exit_code = runcmd_non_fork(sh->cmd, sh);
 	else
@@ -82,7 +83,6 @@ int	main(int argc, char **argv, char **env)
 			break ;
 		add_history(line);
 		sh->cmd = parser(line);
-		--g_signal ;
 		if (sh->cmd)
 			main_execute(sh);
 		free (line);

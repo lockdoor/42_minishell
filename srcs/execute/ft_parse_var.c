@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 10:08:51 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/27 09:19:14 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/29 08:09:38 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,32 @@ char	*parse_qoute(char **str, t_shell *sh)
 	return (t);
 }
 
+/* loop if alphanum and under_scholl */
 char	*parse_var(char **str, t_shell *sh)
 {
 	char	*s;
 	char	*var;
 
 	s = *str;
-	s++ ;
-	while (*s != '\0' && *s != '$' && *s != ' '
-		&& *s != '\'' && *s != '"' && *s != '?')
-		s++ ;
-	if (*s == '?')
+	*str = ++s ;
+	if (!ft_isalpha(*s) && *s != '_')
 	{
-		*str = ++s;
-		return (ft_itoa(sh->exit_code));
+		if (*s == 0 || *s == ' ')
+			return (ft_strdup("$"));
+		if (*s == '?' || ft_isdigit(*s))
+		{
+			if (*s == '?')
+				var = ft_itoa(sh->exit_code);
+			else
+				var = ft_strdup("");
+			*str = ++s;
+			return (var);
+		}
 	}
-	var = ft_substr(*str, 1, s - *str - 1);
+	while (ft_isalpha(*s) || *s == '_')
+		s++ ;
+	var = ft_substr(*str, 0, s - *str);
 	*str = s;
-	if (!var)
-		return (NULL);
 	return (get_env(var, sh));
 }
 
