@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 11:32:05 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/29 12:43:34 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/29 16:37:55 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_exit(char **argv, t_shell *sh)
 	ft_putendl_fd("exit", 2);
 	sh->exit = TRUE;
 	if (len == 1)
-		return (0);
+		return (sh->exit_code);
 	if (len == 2)
 	{
 		if (!ft_atoi_2(argv[1], &status))

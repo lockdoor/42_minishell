@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 10:08:51 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/29 08:09:38 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/29 17:17:51 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ char	*parse_var(char **str, t_shell *sh)
 	*str = ++s ;
 	if (!ft_isalpha(*s) && *s != '_')
 	{
-		if (*s == 0 || *s == ' ')
-			return (ft_strdup("$"));
 		if (*s == '?' || ft_isdigit(*s))
 		{
 			if (*s == '?')
@@ -48,6 +46,7 @@ char	*parse_var(char **str, t_shell *sh)
 			*str = ++s;
 			return (var);
 		}
+		return (ft_strdup("$"));
 	}
 	while (ft_isalpha(*s) || *s == '_')
 		s++ ;
@@ -97,7 +96,8 @@ char	*parse_db_qoute(char **start, t_shell *sh)
 			result = parse_var_in_db_qoute(result, sh, *start, &s);
 			*start = s;
 		}
-		s++ ;
+		else
+			s++ ;
 	}
 	t = ft_substr(*start, 0, s - *start);
 	if (!t)
@@ -106,7 +106,8 @@ char	*parse_db_qoute(char **start, t_shell *sh)
 		return (NULL);
 	}
 	result = join_free(result, t);
-	*start = ++s;
+	if (*s == '"')
+		*start = ++s;
 	return (result);
 }
 

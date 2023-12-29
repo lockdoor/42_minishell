@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:26:55 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/29 08:10:51 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/29 16:44:30 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,12 @@ char	*join_free(char *s_1, char *s_2)
 {
 	char	*result;
 
+	if (!s_2 && *s_2 == 0)
+	{
+		if (s_2)
+			free (s_2);
+		return (s_1);
+	}
 	result = ft_strjoin(s_1, s_2);
 	free (s_1);
 	free (s_2);
