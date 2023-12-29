@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 10:41:04 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/29 09:06:23 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/29 09:33:01 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ char	*ft_parse_cmd(char	*cmd, t_list *env)
 	path = ft_make_path(env);
 	if (!path || !*path)
 	{
+		if (path)
+			free_split(path);
 		free (tmp);
 		return (ft_strdup(cmd));
 	}
