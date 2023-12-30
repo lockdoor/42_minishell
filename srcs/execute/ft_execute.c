@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 07:11:17 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/30 08:09:51 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/30 10:53:43 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,8 @@ void	execute_source(char *cmd, char **argv, t_shell *sh)
 void	execute_error(char *parse_cmd, char **argv, t_shell *sh)
 {
 	perror (parse_cmd);
-	free_split(argv);
-	if (sh->char_env)
-		free_split(sh->char_env);
 	free (parse_cmd);
+	free_split(argv);
 	free_shell (sh);
 	if (errno == EACCES)
 		exit (126);
