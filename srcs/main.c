@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:26:15 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/29 12:08:43 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/30 08:07:12 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	main(int argc, char **argv, char **env)
 		free (line);
 	}
 	ft_lstclear(&sh->env, &free_env);
+	free_split(sh->char_env);
 	status = sh->exit_code;
 	free (sh);
 	return (status);

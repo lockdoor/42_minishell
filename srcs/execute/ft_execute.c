@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 07:11:17 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/28 08:16:28 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/30 08:09:51 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	ft_execute(char **argv, t_shell *sh)
 		free_shell(sh);
 		exit (127);
 	}
-	sh->char_env = make_char_env(sh->env);
 	if (!ft_strncmp(parse_cmd, ".", -1))
 		execute_source(parse_cmd, argv, sh);
 	if (execve(parse_cmd, argv, sh->char_env))

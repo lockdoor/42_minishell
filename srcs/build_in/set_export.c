@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 07:26:41 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/29 08:06:03 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/30 08:11:40 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,7 @@ int	set_exports(char **argv, t_shell *sh)
 		if (set_export(argv[i], sh))
 			return (EXIT_FAILURE);
 	}
+	free_split (sh->char_env);
+	sh->char_env = make_char_env(sh->env);
 	return (0);
 }

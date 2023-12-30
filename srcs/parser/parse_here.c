@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 15:10:26 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/29 08:32:22 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/30 08:10:05 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ static void	write_heredoc(char *s, t_shell *sh, int fd)
 			parse = parse_var(&s, sh);
 			if (parse)
 			{
-				if (*parse)
-					write (fd, parse, sizeof (parse));
+				write (fd, parse, ft_strlen(parse));
 				free (parse);
 			}
+			continue ;
 		}
-		else
-			write (fd, s++, 1);
+		write (fd, s++, 1);
 	}
+	ft_putchar_fd('\n', fd);
 }
 
 int	parse_heredoc(char *limiter, t_shell *sh)
@@ -46,10 +46,9 @@ int	parse_heredoc(char *limiter, t_shell *sh)
 	while (1)
 	{
 		line = readline("> ");
-		if (!line || !ft_strncmp(line, limiter, ft_strlen(line)))
+		if (!line || !ft_strncmp(line, limiter, -1))
 			break ;
 		write_heredoc(line, sh, p[1]);
-		ft_putchar_fd('\n', p[1]);
 		free (line);
 	}
 	free (line);

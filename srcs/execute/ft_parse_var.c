@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 10:08:51 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/29 17:17:51 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/30 07:32:25 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,36 +55,10 @@ char	*parse_var(char **str, t_shell *sh)
 	return (get_env(var, sh));
 }
 
-static char	*parse_var_in_db_qoute(char *result, \
-	t_shell *sh, char *start, char **str)
-{
-	char	*t;
-	char	*s;
-
-	s = *str;
-	t = ft_substr(start, 0, s - start);
-	if (!t)
-	{
-		free (result);
-		return (NULL);
-	}
-	result = join_free (result, t);
-	t = parse_var(&s, sh);
-	if (!t)
-	{
-		free (result);
-		return (NULL);
-	}
-	result = join_free (result, t);
-	*str = s;
-	return (result);
-}
-
 char	*parse_db_qoute(char **start, t_shell *sh)
 {
 	char	*result;
 	char	*s;
-	char	*t;
 
 	s = *start;
 	result = ft_strdup("");
@@ -93,19 +67,15 @@ char	*parse_db_qoute(char **start, t_shell *sh)
 	{
 		if (*s == '$')
 		{
-			result = parse_var_in_db_qoute(result, sh, *start, &s);
+			if (s != *start)
+				result = join_free (result, ft_substr(*start, 0, s - *start));
+			result = join_free (result, parse_var(&s, sh));
 			*start = s;
 		}
 		else
 			s++ ;
 	}
-	t = ft_substr(*start, 0, s - *start);
-	if (!t)
-	{
-		free (result);
-		return (NULL);
-	}
-	result = join_free(result, t);
+	result = join_free(result, ft_substr(*start, 0, s - *start));
 	if (*s == '"')
 		*start = ++s;
 	return (result);

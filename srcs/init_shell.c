@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:43:03 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/28 09:11:25 by pnamnil          ###   ########.fr       */
+/*   Updated: 2023/12/30 07:51:16 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ t_shell	*init_shell(char **env)
 	}
 	ft_memset(sh, 0, sizeof(t_shell));
 	sh->env = ft_get_env(env);
+	sh->char_env = make_char_env(sh->env);
 	set_shell_level(sh);
 	if (!sh->env)
 	{
