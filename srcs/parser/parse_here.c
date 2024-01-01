@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 15:10:26 by pnamnil           #+#    #+#             */
-/*   Updated: 2024/01/01 13:11:24 by pnamnil          ###   ########.fr       */
+/*   Updated: 2024/01/01 14:45:33 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*parse_limiter(char *s, int *should_parse)
 	int		q;
 	int		i;
 
-	lim = ft_calloc(1, ft_strlen(s));
+	lim = ft_calloc(1, ft_strlen(s) + 1);
 	if (!lim)
 		return (NULL);
 	*should_parse = 1;
