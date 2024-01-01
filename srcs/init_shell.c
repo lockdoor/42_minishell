@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:43:03 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/30 07:51:16 by pnamnil          ###   ########.fr       */
+/*   Updated: 2024/01/01 13:31:24 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,25 +65,16 @@ static void	set_shell_level(t_shell *sh)
 	env->value = s;
 }
 
-t_shell	*init_shell(char **env)
+t_shell	*init_shell(char **env, t_shell *sh)
 {
-	t_shell	*sh;
-
 	minishell_terminal();
 	init_sig();
-	sh = (t_shell *) malloc (sizeof(t_shell));
-	if (!sh)
-	{
-		perror ("init_shell");
-		exit (EXIT_FAILURE);
-	}
 	ft_memset(sh, 0, sizeof(t_shell));
 	sh->env = ft_get_env(env);
 	sh->char_env = make_char_env(sh->env);
 	set_shell_level(sh);
 	if (!sh->env)
 	{
-		free (sh);
 		perror ("init_shell cannot get env");
 		exit (EXIT_FAILURE);
 	}

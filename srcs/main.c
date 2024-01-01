@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:26:15 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/30 08:07:12 by pnamnil          ###   ########.fr       */
+/*   Updated: 2024/01/01 13:29:50 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,27 +71,26 @@ void	main_execute(t_shell *sh)
 int	main(int argc, char **argv, char **env)
 {
 	char	*line;
-	t_shell	*sh;
-	int		status;
+	t_shell	sh;
 
 	if (argc > 1)
 		ft_execute_try(argv[1], env);
-	sh = init_shell(env);
-	while (!sh->exit)
+	init_shell(env, &sh);
+	while (!sh.exit)
 	{
 		g_signal = 0;
 		line = readline("$ ");
 		if (!line)
 			break ;
 		add_history(line);
-		sh->cmd = parser(line);
-		if (sh->cmd)
-			main_execute(sh);
+		sh.cmd = parser(line);
+		if (sh.cmd)
+			main_execute(&sh);
+		else
+			sh.exit_code = 258;
 		free (line);
 	}
-	ft_lstclear(&sh->env, &free_env);
-	free_split(sh->char_env);
-	status = sh->exit_code;
-	free (sh);
-	return (status);
+	ft_lstclear(&sh.env, &free_env);
+	free_split(sh.char_env);
+	return (sh.exit_code);
 }

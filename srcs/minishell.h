@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 10:33:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/29 11:14:11 by pnamnil          ###   ########.fr       */
+/*   Updated: 2024/01/01 13:27:55 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ typedef struct s_shell
 {
 	t_cmd		*cmd;
 	t_list		*env;
-	u_int8_t	exit_code;
+	int			exit_code;
 	u_int8_t	exit;
 	char		**char_env;
 }	t_shell;
@@ -91,7 +91,7 @@ typedef struct s_shell
 void	sigint_handler(int signum);
 
 // init_shell.c
-t_shell	*init_shell(char **env);
+t_shell	*init_shell(char **env, t_shell *sh);
 
 // ft_get_env.c
 t_list	*ft_get_env(char **environment);
