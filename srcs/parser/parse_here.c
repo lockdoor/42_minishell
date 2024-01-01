@@ -6,11 +6,13 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 15:10:26 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/30 08:10:05 by pnamnil          ###   ########.fr       */
+/*   Updated: 2024/01/01 13:11:24 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	init_pipe_limiter(int *p, char **lim, char *limiter, int *should_parse);
 
 static void	write_heredoc(char *s, t_shell *sh, int fd)
 {
@@ -33,24 +35,56 @@ static void	write_heredoc(char *s, t_shell *sh, int fd)
 	ft_putchar_fd('\n', fd);
 }
 
+char	*parse_limiter(char *s, int *should_parse)
+{
+	char	*lim;
+	int		q;
+	int		i;
+
+	lim = ft_calloc(1, ft_strlen(s));
+	if (!lim)
+		return (NULL);
+	*should_parse = 1;
+	i = 0;
+	while (*s)
+	{
+		if (*s == '\'' || *s == '"')
+		{
+			q = *s;
+			s++ ;
+			*should_parse = 0;
+			while (*s && *s != q)
+				lim[i++] = *s++;
+			if (*s == q)
+				s++ ;
+			continue ;
+		}
+		lim[i++] = *s++;
+	}
+	return (lim);
+}
+
 int	parse_heredoc(char *limiter, t_shell *sh)
 {
 	int		p[2];
 	char	*line;
+	char	*lim;
+	int		should_parse;
 
-	if (pipe(p))
-	{
-		perror("fd_heredoc");
+	if (init_pipe_limiter(p, &lim, limiter, &should_parse))
 		return (-1);
-	}
 	while (1)
 	{
 		line = readline("> ");
-		if (!line || !ft_strncmp(line, limiter, -1))
+		if (!line || !ft_strncmp(line, lim, -1))
 			break ;
-		write_heredoc(line, sh, p[1]);
+		if (should_parse)
+			write_heredoc(line, sh, p[1]);
+		else
+			ft_putendl_fd(line, p[1]);
 		free (line);
 	}
+	free (lim);
 	free (line);
 	close (p[1]);
 	return (p[0]);
