@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 10:33:24 by pnamnil           #+#    #+#             */
-/*   Updated: 2024/01/01 13:27:55 by pnamnil          ###   ########.fr       */
+/*   Updated: 2024/01/02 08:23:58 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int		gettoken(char **ps, char *es, char **q, char **eq);
 int		peek(char **ps, char *es, char *tok);
 
 // parser.c
-t_cmd	*parser(char *ps);
+t_cmd	*parser(char *ps, t_shell *sh);
 t_cmd	*parse_exec(char **ps, char *es);
 t_cmd	*token_error(t_cmd *cmd, char *s);
 void	null_terminate(t_cmd *cmd);

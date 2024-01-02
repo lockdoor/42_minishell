@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:26:15 by pnamnil           #+#    #+#             */
-/*   Updated: 2024/01/01 13:41:12 by pnamnil          ###   ########.fr       */
+/*   Updated: 2024/01/02 08:23:41 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,9 @@ int	main(int argc, char **argv, char **env)
 		if (!line)
 			break ;
 		add_history(line);
-		sh.cmd = parser(line);
+		sh.cmd = parser(line, &sh);
 		if (sh.cmd)
 			main_execute(&sh);
-		else
-			sh.exit_code = 258;
 		free (line);
 	}
 	ft_lstclear(&sh.env, &free_env);

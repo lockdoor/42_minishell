@@ -6,7 +6,7 @@
 /*   By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 08:08:40 by pnamnil           #+#    #+#             */
-/*   Updated: 2023/12/29 12:45:05 by pnamnil          ###   ########.fr       */
+/*   Updated: 2024/01/02 08:26:31 by pnamnil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_cmd	*parse_redir(t_cmd *cmd, char **ps, char *es);
 t_cmd	*parse_exec(char **ps, char *es);
 int		is_no_cmd(t_cmd *cmd, char	*s);
 
-t_cmd	*parser(char *ps)
+t_cmd	*parser(char *ps, t_shell *sh)
 {
 	t_cmd	*cmd;
 	char	*es;
@@ -32,7 +32,10 @@ t_cmd	*parser(char *ps)
 		return (NULL);
 	cmd = parse_pipe(&ps, es);
 	if (!cmd)
+	{
+		sh->exit_code = 1;
 		return (NULL);
+	}
 	if (cmd->type == EXEC)
 	{
 		exec = (t_exec *)cmd;
