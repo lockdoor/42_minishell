@@ -6,7 +6,7 @@
 #    By: pnamnil <pnamnil@student.42bangkok.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/24 15:48:31 by pnamnil           #+#    #+#              #
-#    Updated: 2024/01/01 13:03:56 by pnamnil          ###   ########.fr        #
+#    Updated: 2024/01/03 07:12:58 by pnamnil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,7 @@ SRCS = main.c \
 		build_in/set_export.c \
 		build_in/cd.c 
 		
-HEADERS = minishell.h
+HEADERS = srcs/minishell.h
 
 all: $(NAME)
 # ./$(NAME)
@@ -74,7 +74,7 @@ OBJS = $(SRCS:%.c=$(BUILD_DIR)/%.o)
 
 $(OBJS): $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(@D)
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 l:
 	leaks --atExit -- ./$(NAME)
@@ -84,11 +84,9 @@ v:
 # valgrind --leak-check=full --track-origins=yes ./$(NAME)
 	valgrind --leak-check=full ./$(NAME)
 
-$(NAME): make_libft $(OBJS) $(HEADER)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBS)  -o $(NAME)
-
-make_libft:
+$(NAME): $(OBJS) $(HEADERS)
 	$(MAKE) -C $(LIB_PATH);
+	$(CC) $(CFLAGS) $(OBJS) $(LIBS)  -o $(NAME)
 
 clean:
 	rm -rf bin
